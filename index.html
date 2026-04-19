@@ -4446,8 +4446,22 @@
           <div class="section-subtitle">Contracts · Deposits · Contacts — every vendor in one place</div>
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <input class="form-input" id="vnd-search" type="text" placeholder="Search vendors…"
-            style="font-size:0.78rem;padding:7px 12px;width:180px;" oninput="renderVendorCards()" />
+          <!-- Search with clear button -->
+          <div style="position:relative;display:flex;align-items:center;">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="position:absolute;left:9px;color:var(--text-muted);pointer-events:none;flex-shrink:0;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input class="form-input" id="vnd-search" type="text"
+              placeholder="Search by name, contact, category…"
+              style="font-size:0.78rem;padding:7px 30px 7px 30px;width:230px;"
+              oninput="renderVendorCards(); updateVndSearchUI()" />
+            <button id="vnd-search-clear" onclick="clearVendorSearch()"
+              style="display:none;position:absolute;right:8px;background:none;border:none;
+                     cursor:pointer;color:var(--text-muted);font-size:14px;line-height:1;padding:2px;"
+              title="Clear search">×</button>
+          </div>
           <select class="form-input" id="vnd-filter-cat" onchange="renderVendorCards()"
             style="font-size:0.78rem;padding:7px 28px 7px 10px;width:auto;">
             <option value="">All Categories</option>
@@ -4462,6 +4476,26 @@
           <button class="btn btn-primary" onclick="openVendorDrawer()">
             <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
             Add Vendor
+          </button>
+        </div>
+      </div>
+
+      <!-- Active filter / results bar — shows only when search or filter is active -->
+      <div id="vnd-filter-bar" style="display:none;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;
+                    background:var(--brand-primary-dim);border:1px solid var(--border-accent);
+                    border-radius:var(--radius-md);padding:8px 14px;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--text-primary);">
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--brand-primary);">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span id="vnd-filter-summary"></span>
+          </div>
+          <button onclick="clearAllVendorFilters()"
+            style="font-size:0.72rem;font-weight:600;color:var(--brand-primary);background:none;
+                   border:none;cursor:pointer;padding:0;">
+            Clear all filters
           </button>
         </div>
       </div>
@@ -5787,8 +5821,44 @@
               <input class="form-input" id="s-planner-phone" type="tel" placeholder="(555) 000-0000" />
             </div>
             <div class="form-group span-2">
-              <label class="form-label" for="s-logo-url">Logo URL <span style="color:var(--text-muted);font-weight:400;">(optional — paste a hosted image URL)</span></label>
-              <input class="form-input" id="s-logo-url" type="url" placeholder="https://yourdomain.com/logo.png" />
+              <label class="form-label">Logo
+                <span style="color:var(--text-muted);font-weight:400;"> (upload a file or paste a URL)</span>
+              </label>
+
+              <!-- Live preview -->
+              <div id="logo-preview-wrap" style="display:none;margin-bottom:10px;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div style="width:48px;height:48px;border-radius:8px;border:1px solid var(--border);overflow:hidden;background:var(--bg-elevated);flex-shrink:0;">
+                    <img id="logo-preview-img" src="" alt="Logo preview"
+                      style="width:100%;height:100%;object-fit:contain;" />
+                  </div>
+                  <div>
+                    <div style="font-size:0.78rem;font-weight:600;color:var(--text-primary);" id="logo-preview-name">Logo loaded</div>
+                    <button class="btn btn-ghost" style="font-size:0.72rem;padding:3px 10px;margin-top:4px;" onclick="removeLogo()">Remove Logo</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload button -->
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <label class="btn btn-secondary" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                  </svg>
+                  Upload Logo File
+                  <input type="file" id="logo-file-input" accept="image/*"
+                    style="display:none;" onchange="handleLogoUpload(event)" />
+                </label>
+                <span style="font-size:0.75rem;color:var(--text-muted);">or</span>
+                <input class="form-input" id="s-logo-url" type="url"
+                  placeholder="Paste image URL (https://…)"
+                  style="flex:1;min-width:180px;"
+                  oninput="handleLogoUrlInput(this.value)" />
+              </div>
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-top:5px;">
+                Supports PNG, JPG, SVG, WebP · Uploaded files are stored locally in your browser
+              </div>
             </div>
             <div class="form-group span-2">
               <label class="form-label" for="s-footer-text">Default Footer Text</label>
@@ -6019,6 +6089,76 @@
     }
 
     // ============================================================
+    // LOGO UPLOAD
+    // ============================================================
+
+    function handleLogoUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select an image file (PNG, JPG, SVG, WebP)', 'warning');
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        showToast('Image must be under 2MB', 'warning');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const dataUrl = ev.target.result;
+        // Store as pending until Save Settings is clicked
+        APP.settings._pendingLogoUrl = dataUrl;
+        updateLogoPreview(dataUrl, file.name);
+        // Clear URL field since we're using upload
+        const urlInput = document.getElementById('s-logo-url');
+        if (urlInput) urlInput.value = '';
+      };
+      reader.readAsDataURL(file);
+      // Reset input so same file can be re-selected
+      e.target.value = '';
+    }
+
+    function handleLogoUrlInput(val) {
+      // When user types a URL, clear any pending upload
+      APP.settings._pendingLogoUrl = val.trim() || undefined;
+      if (val.trim()) {
+        updateLogoPreview(val.trim(), val.trim());
+      } else {
+        updateLogoPreview('');
+      }
+    }
+
+    function updateLogoPreview(src, label) {
+      const wrap     = document.getElementById('logo-preview-wrap');
+      const img      = document.getElementById('logo-preview-img');
+      const nameEl   = document.getElementById('logo-preview-name');
+      if (!wrap || !img) return;
+
+      if (src) {
+        img.src = src;
+        img.onload  = () => { wrap.style.display = 'block'; };
+        img.onerror = () => { wrap.style.display = 'none'; };
+        if (nameEl) {
+          if (label && label.length > 40) label = label.substring(0, 38) + '…';
+          nameEl.textContent = label || 'Logo loaded';
+        }
+        // Force show if it's a data URL (already loaded)
+        if (src.startsWith('data:')) wrap.style.display = 'block';
+      } else {
+        wrap.style.display = 'none';
+        img.src = '';
+      }
+    }
+
+    function removeLogo() {
+      APP.settings._pendingLogoUrl = '';
+      updateLogoPreview('');
+      const urlInput = document.getElementById('s-logo-url');
+      if (urlInput) urlInput.value = '';
+      showToast('Logo removed — click Save Settings to apply', 'warning');
+    }
+
+    // ============================================================
     // SETTINGS MODAL
     // ============================================================
     function openSettings() {
@@ -6028,7 +6168,8 @@
       document.getElementById('s-planner-title').value  = s.plannerTitle || '';
       document.getElementById('s-planner-email').value  = s.plannerEmail || '';
       document.getElementById('s-planner-phone').value  = s.plannerPhone || '';
-      document.getElementById('s-logo-url').value       = s.logoUrl      || '';
+      document.getElementById('s-logo-url').value       = s.logoUrl && !s.logoUrl.startsWith('data:') ? s.logoUrl : '';
+      updateLogoPreview(s.logoUrl || '');
       document.getElementById('s-footer-text').value    = s.footerText   || '';
       document.getElementById('s-brand-color').value    = s.brandColor   || '#B07D74';
       document.getElementById('s-brand-color-hex').value = s.brandColor  || '#B07D74';
@@ -6058,7 +6199,9 @@
         plannerTitle: document.getElementById('s-planner-title').value.trim() || 'Event Planner',
         plannerEmail: document.getElementById('s-planner-email').value.trim(),
         plannerPhone: document.getElementById('s-planner-phone').value.trim(),
-        logoUrl:      document.getElementById('s-logo-url').value.trim(),
+        logoUrl:      APP.settings._pendingLogoUrl !== undefined
+                        ? APP.settings._pendingLogoUrl
+                        : (document.getElementById('s-logo-url').value.trim() || APP.settings.logoUrl || ''),
         footerText:   document.getElementById('s-footer-text').value.trim(),
         brandColor:   color,
         currency:     document.getElementById('s-currency').value,
@@ -6066,6 +6209,7 @@
       };
 
       saveState();
+      delete APP.settings._pendingLogoUrl;
       applyBrandToUI();
       closeSettings();
       showToast('Settings saved successfully', 'success');
@@ -8729,6 +8873,69 @@
       if (el) el.textContent = val;
     }
 
+    /* ── Search UI helpers ── */
+    function updateVndSearchUI() {
+      const val   = (document.getElementById('vnd-search') || {}).value || '';
+      const clearBtn = document.getElementById('vnd-search-clear');
+      if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+      updateVndFilterBar();
+    }
+
+    function updateVndFilterBar() {
+      const bar     = document.getElementById('vnd-filter-bar');
+      const summary = document.getElementById('vnd-filter-summary');
+      if (!bar || !summary) return;
+
+      const search  = (document.getElementById('vnd-search') || {}).value?.trim() || '';
+      const catF    = (document.getElementById('vnd-filter-cat') || {}).value || '';
+      const statF   = (document.getElementById('vnd-filter-status') || {}).value || '';
+
+      const parts = [];
+      if (search) parts.push(`Search: "${search}"`);
+      if (catF)   parts.push(`Category: ${catF}`);
+      if (statF)  parts.push(`Status: ${statF}`);
+
+      if (!parts.length) {
+        bar.style.display = 'none';
+        return;
+      }
+
+      // Count matching results
+      let vendors = APP.vendors || [];
+      if (search) vendors = vendors.filter(v =>
+        (v.companyName||'').toLowerCase().includes(search.toLowerCase()) ||
+        (v.contactName||'').toLowerCase().includes(search.toLowerCase()) ||
+        (v.category||'').toLowerCase().includes(search.toLowerCase()) ||
+        (v.service||'').toLowerCase().includes(search.toLowerCase())
+      );
+      if (catF)  vendors = vendors.filter(v => v.category === catF);
+      if (statF) vendors = vendors.filter(v => v.contractStatus === statF);
+
+      const count = vendors.length;
+      const total = (APP.vendors || []).length;
+
+      summary.innerHTML = `<strong>${count}</strong> of ${total} vendor${total !== 1 ? 's' : ''} — ${parts.join(' · ')}`;
+      bar.style.display = 'block';
+    }
+
+    function clearVendorSearch() {
+      const input = document.getElementById('vnd-search');
+      if (input) { input.value = ''; input.focus(); }
+      updateVndSearchUI();
+      renderVendorCards();
+    }
+
+    function clearAllVendorFilters() {
+      const search = document.getElementById('vnd-search');
+      const cat    = document.getElementById('vnd-filter-cat');
+      const status = document.getElementById('vnd-filter-status');
+      if (search) search.value = '';
+      if (cat)    cat.value    = '';
+      if (status) status.value = '';
+      updateVndSearchUI();
+      renderVendorCards();
+    }
+
     /* ── Card grid ── */
     function renderVendorCards() {
       const grid   = document.getElementById('vnd-grid');
@@ -8823,6 +9030,9 @@
             </div>` : ''}
           </div>`;
       }).join('');
+
+      // Update filter bar to reflect current results
+      updateVndFilterBar();
     }
 
     /* ── Drawer ── */
