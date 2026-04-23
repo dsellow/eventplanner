@@ -3536,9 +3536,14 @@
        PRINT STYLES — RUN OF SHOW
     ============================================================ */
     @media print {
-      /* Hide everything except the print sheet */
+      /* Hide everything on screen except the print sheet */
       body > *:not(#ros-print-sheet) { display: none !important; }
-      #ros-print-sheet { display: block !important; }
+      #ros-print-sheet {
+        display: block !important;
+        position: static !important;
+        visibility: visible !important;
+        overflow: visible !important;
+      }
 
       body {
         background: #fff !important;
@@ -4876,28 +4881,8 @@
       </div>
     </div>
 
-    <!-- ═══ PRINT-ONLY RUN OF SHOW ═══ -->
-    <div id="ros-print-sheet" style="display:none;">
-      <div class="ros-print-header">
-        <div class="ros-print-company" id="ros-print-company"></div>
-        <div class="ros-print-event" id="ros-print-event"></div>
-        <div class="ros-print-meta" id="ros-print-meta"></div>
-      </div>
-      <table class="ros-print-table" id="ros-print-table">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Duration</th>
-            <th>Activity</th>
-            <th>Location</th>
-            <th class="ros-print-owner-col">Owner</th>
-            <th class="ros-print-notes-col">Notes</th>
-          </tr>
-        </thead>
-        <tbody id="ros-print-tbody"></tbody>
-      </table>
-      <div class="ros-print-footer" id="ros-print-footer"></div>
-    </div>
+    <!-- ═══ ROS Modal ═══ -->
+    <!-- (print sheet moved outside main — see below) -->
 
     <!-- ═══════════════════════════════════════════════════════
          GUEST LIST & RSVP PANEL
@@ -5778,6 +5763,33 @@
     </div><!-- /#panel-moodboard -->
 
   </main><!-- /#main -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       PRINT-ONLY RUN OF SHOW SHEET
+       Must be a direct child of <body> so the @media print rule
+       body > *:not(#ros-print-sheet) correctly hides everything else.
+  ═══════════════════════════════════════════════════════ -->
+  <div id="ros-print-sheet" style="display:none;">
+    <div class="ros-print-header">
+      <div class="ros-print-company" id="ros-print-company"></div>
+      <div class="ros-print-event"   id="ros-print-event"></div>
+      <div class="ros-print-meta"    id="ros-print-meta"></div>
+    </div>
+    <table class="ros-print-table" id="ros-print-table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Duration</th>
+          <th>Activity</th>
+          <th>Location</th>
+          <th class="ros-print-owner-col">Owner</th>
+          <th class="ros-print-notes-col">Notes</th>
+        </tr>
+      </thead>
+      <tbody id="ros-print-tbody"></tbody>
+    </table>
+    <div class="ros-print-footer" id="ros-print-footer"></div>
+  </div>
 
   <!-- ============================================================
        SETTINGS MODAL
