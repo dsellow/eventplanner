@@ -6578,6 +6578,23 @@
   <script>
 
     // ============================================================
+    // ACCESS GATE — runs immediately before anything else
+    // Hides gate instantly for already-unlocked users
+    // ============================================================
+    const ACCESS_CODE = 'ECC-2025-PLANNER';
+    const GATE_KEY    = 'ecc_unlocked_v1';
+
+    (function immediateGateCheck() {
+      if (localStorage.getItem(GATE_KEY) === 'true') {
+        // Use a style tag injected into head for instant hide
+        // before the DOM finishes rendering
+        const s = document.createElement('style');
+        s.textContent = '#access-gate { display: none !important; }';
+        document.head.appendChild(s);
+      }
+    })();
+
+    // ============================================================
     // STATE
     // ============================================================
     const DEFAULT_SETTINGS = {
@@ -9904,23 +9921,4 @@
       const cur = APP.settings.currency || '$';
       chips.innerHTML = Object.entries(tally).map(([cat, d]) => `
         <div class="bgt-cat-chip" onclick="filterByCategory('${cat}')">
-          <div class="bgt-cat-chip-dot" style="background:${catColor(cat)}"></div>
-          ${escHtml(cat)}
-          <span style="color:var(--text-muted);font-weight:400;">${d.count} · ${cur}${fmtNum(d.total)}</span>
-        </div>
-      `).join('');
-    }
-
-    function filterByCategory(cat) {
-      const sel = document.getElementById('bgt-filter-cat');
-      if (!sel) return;
-      sel.value = sel.value === cat ? '' : cat;
-      renderBudgetTable();
-    }
-
-    /* ── Table ── */
-    function renderBudgetTable() {
-      const tbody  = document.getElementById('bgt-tbody');
-      const tfoot  = document.getElementById('bgt-tfoot');
-      const empty  = document.getElementById('bgt-empty');
-      const table  = document.getElementById('bgt-
+          <div class="bgt-cat-ch
