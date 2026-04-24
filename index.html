@@ -4117,15 +4117,17 @@
       <div class="gate-input-wrap">
         <input
           id="gate-input"
-          type="password"
-          placeholder="ECC-XXXX-XXXX"
+          type="text"
+          placeholder="ECC-2025-PLANNER"
           autocomplete="off"
           autocorrect="off"
           autocapitalize="characters"
           spellcheck="false"
+          inputmode="text"
+          style="text-transform:uppercase;letter-spacing:0.14em;"
           onkeydown="if(event.key==='Enter') submitGateCode()"
-          oninput="clearGateError()" />
-        <button id="gate-toggle-pw" onclick="toggleGateVisibility()" title="Show / hide code" type="button">
+          oninput="clearGateError(); this.value=this.value.toUpperCase()" />
+        <button id="gate-toggle-pw" onclick="toggleGateVisibility()" title="Show / hide code" type="button" style="display:none;">
           <svg id="gate-eye-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -9921,8 +9923,4 @@
       const tbody  = document.getElementById('bgt-tbody');
       const tfoot  = document.getElementById('bgt-tfoot');
       const empty  = document.getElementById('bgt-empty');
-      const table  = document.getElementById('bgt-table');
-      const filter = (document.getElementById('bgt-filter-cat')||{}).value || '';
-      const cur    = APP.settings.currency || '$';
-
-      le
+      const table  = document.getElementById('bgt-
