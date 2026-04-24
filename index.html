@@ -4,6 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event Command Center</title>
+
+  <!-- ── PWA Meta Tags ── -->
+  <meta name="application-name" content="Event Command Center" />
+  <meta name="description" content="Professional all-in-one event planning — budget, vendors, guests, run of show, seating, moodboard and more." />
+  <meta name="theme-color" content="#B07D74" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Event Planner" />
+  <meta name="msapplication-TileColor" content="#B07D74" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <!-- ── PWA Inline Manifest ── -->
+  <script>
+    const _pwaManifest = {
+      name: "Event Command Center",
+      short_name: "Event Planner",
+      description: "Professional all-in-one event planning tool",
+      start_url: "./",
+      display: "standalone",
+      orientation: "landscape",
+      background_color: "#F5F0EC",
+      theme_color: "#B07D74",
+      categories: ["business", "productivity"],
+      icons: [
+        {
+          src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='32' fill='%23B07D74'/><text x='96' y='130' font-family='Georgia,serif' font-size='110' font-weight='bold' fill='white' text-anchor='middle'>E</text></svg>`),
+          sizes: "192x192",
+          type: "image/svg+xml",
+          purpose: "any maskable"
+        },
+        {
+          src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%23B07D74'/><text x='256' y='360' font-family='Georgia,serif' font-size='300' font-weight='bold' fill='white' text-anchor='middle'>E</text></svg>`),
+          sizes: "512x512",
+          type: "image/svg+xml",
+          purpose: "any maskable"
+        }
+      ]
+    };
+    const _blob = new Blob([JSON.stringify(_pwaManifest)], {type:'application/manifest+json'});
+    const _mUrl = URL.createObjectURL(_blob);
+    document.addEventListener('DOMContentLoaded', () => {
+      const link = document.createElement('link');
+      link.rel  = 'manifest';
+      link.href = _mUrl;
+      document.head.appendChild(link);
+    });
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -49,6 +98,42 @@
       --shadow-modal: 0 24px 80px rgba(0,0,0,0.18);
 
       --transition: 0.18s ease;
+    }
+
+    /* ── DARK MODE THEME ── */
+    html[data-theme="dark"] {
+      --bg-base:    #0D1117;
+      --bg-surface: #161B22;
+      --bg-elevated: #21262D;
+      --bg-modal:   #161B22;
+
+      --text-primary:   #E6EDF3;
+      --text-secondary: #8B949E;
+      --text-muted:     #484F58;
+      --text-accent:    var(--brand-primary);
+
+      --border:        rgba(255,255,255,0.08);
+      --border-accent: rgba(176,125,116,0.40);
+
+      --success: #3FB950;
+      --warning: #D29922;
+      --danger:  #F85149;
+      --info:    #58A6FF;
+
+      --shadow-card:  0 2px 16px rgba(0,0,0,0.5);
+      --shadow-modal: 0 24px 80px rgba(0,0,0,0.8);
+    }
+
+    /* Smooth theme transitions */
+    html.theme-transitioning,
+    html.theme-transitioning *,
+    html.theme-transitioning *::before,
+    html.theme-transitioning *::after {
+      transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease !important;
     }
 
     /* ============================================================
@@ -3533,6 +3618,138 @@
     }
 
     /* ============================================================
+       THEME SWITCHER
+    ============================================================ */
+    .theme-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .theme-toggle-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .theme-toggle-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Pill toggle */
+    .theme-pill {
+      display: flex;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .theme-pill-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .theme-pill-btn.active {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    html[data-theme="dark"] .theme-pill-btn.active {
+      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+
+    .theme-pill-btn svg {
+      flex-shrink: 0;
+    }
+
+    /* Theme preview swatches */
+    .theme-previews {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .theme-preview-card {
+      flex: 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-preview-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .theme-preview-card.selected {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 2px var(--brand-primary-dim);
+    }
+
+    .theme-preview-top {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 5px;
+    }
+
+    .theme-preview-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .theme-preview-bar {
+      flex: 1;
+      height: 5px;
+      border-radius: 99px;
+    }
+
+    .theme-preview-content {
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .theme-preview-line {
+      height: 4px;
+      border-radius: 2px;
+    }
+
+    .theme-preview-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 5px 0 4px;
+    }
+
+    /* ============================================================
        PRINT STYLES — RUN OF SHOW
     ============================================================ */
     @media print {
@@ -3642,6 +3859,188 @@
       }
     }
 
+    /* ============================================================
+       ACCESS CODE GATE
+    ============================================================ */
+    #access-gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-base);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body);
+      transition: opacity 0.5s ease;
+    }
+
+    #access-gate.unlocking {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gate-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-modal);
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gate-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--brand-primary), var(--brand-primary-glow));
+    }
+
+    .gate-logo-mark {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--brand-primary-dim);
+      border: 1px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--brand-primary);
+    }
+
+    .gate-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .gate-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .gate-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .gate-input-wrap {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    #gate-input {
+      width: 100%;
+      padding: 13px 44px 13px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text-primary);
+      background: var(--bg-base);
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      box-sizing: border-box;
+    }
+
+    #gate-input:focus {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 3px var(--brand-primary-dim);
+    }
+
+    #gate-input.gate-error {
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(194,93,93,0.12);
+      animation: gate-shake 0.35s ease;
+    }
+
+    @keyframes gate-shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-6px); }
+      40%      { transform: translateX(6px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }
+
+    #gate-toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+      transition: color var(--transition);
+    }
+
+    #gate-toggle-pw:hover { color: var(--text-primary); }
+
+    #gate-error-msg {
+      font-size: 0.78rem;
+      color: var(--danger);
+      min-height: 18px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    #gate-submit {
+      width: 100%;
+      padding: 13px;
+      background: var(--brand-primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all var(--transition);
+    }
+
+    #gate-submit:hover {
+      background: color-mix(in srgb, var(--brand-primary) 85%, #000);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px var(--brand-primary-glow);
+    }
+
+    #gate-submit:active { transform: translateY(0); }
+
+    .gate-footer-note {
+      margin-top: 20px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Screen-only — gate never prints */
+    @media print { #access-gate { display: none !important; } }
+
+    /* ── End of styles ── */
+
     /* Screen-only — hide print sheet */
     #ros-print-sheet { display: none; }
 
@@ -3649,6 +4048,49 @@
 </head>
 
 <body>
+
+  <!-- ============================================================
+       ACCESS CODE GATE
+       ★ CHANGE THE CODE BELOW before distributing to buyers ★
+       Find: ACCESS_CODE and replace 'ECC-2025-PLANNER' with your code.
+       Buyers enter this once — permanently unlocked on their device.
+  ============================================================ -->
+  <div id="access-gate">
+    <div class="gate-card">
+      <div class="gate-logo-mark">E</div>
+      <h1 class="gate-title">Event Command Center</h1>
+      <p class="gate-subtitle">
+        Enter your access code to unlock<br>your event planning workspace.
+      </p>
+      <label class="gate-label" for="gate-input">Access Code</label>
+      <div class="gate-input-wrap">
+        <input
+          id="gate-input"
+          type="password"
+          placeholder="ECC-XXXX-XXXX"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          onkeydown="if(event.key==='Enter') submitGateCode()"
+          oninput="clearGateError()" />
+        <button id="gate-toggle-pw" onclick="toggleGateVisibility()" title="Show / hide code" type="button">
+          <svg id="gate-eye-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
+        </button>
+      </div>
+      <span id="gate-error-msg"></span>
+      <button id="gate-submit" onclick="submitGateCode()">Unlock Workspace</button>
+      <p class="gate-footer-note">
+        Your access code was included in your order confirmation.<br>
+        Need help? Visit <strong>EventCommandCenter.com/support</strong>
+      </p>
+    </div>
+  </div>
 
   <!-- ============================================================
        APP LOADER
@@ -5879,6 +6321,68 @@
           </div>
         </div>
 
+        <!-- Theme Mode -->
+        <div>
+          <div class="modal-section-label">Appearance</div>
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <div class="theme-toggle-row">
+                <div>
+                  <div class="theme-toggle-label">Color Mode</div>
+                  <div class="theme-toggle-sub">Choose light or dark theme for the workspace</div>
+                </div>
+                <!-- Pill toggle — active class set by JS -->
+                <div class="theme-pill">
+                  <button class="theme-pill-btn" id="theme-btn-light" onclick="setTheme('light')">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07-6.07l-.71.71M6.34 17.66l-.71.71m12.02 0l-.71-.71M6.34 6.34l-.71-.71M12 7a5 5 0 100 10A5 5 0 0012 7z"/>
+                    </svg>
+                    Light
+                  </button>
+                  <button class="theme-pill-btn" id="theme-btn-dark" onclick="setTheme('dark')">
+                    <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                    Dark
+                  </button>
+                </div>
+              </div>
+
+              <!-- Visual previews -->
+              <div class="theme-previews">
+                <!-- Light preview -->
+                <div class="theme-preview-card" id="preview-light" onclick="setTheme('light')">
+                  <div class="theme-preview-top" style="background:#F5F0EC;">
+                    <div class="theme-preview-dot" style="background:#B07D74;"></div>
+                    <div class="theme-preview-bar" style="background:#EDE8E4;flex:1;"></div>
+                  </div>
+                  <div class="theme-preview-content" style="background:#FFFFFF;">
+                    <div class="theme-preview-line" style="background:#EDE8E4;width:80%;"></div>
+                    <div class="theme-preview-line" style="background:#EDE8E4;width:60%;"></div>
+                    <div class="theme-preview-line" style="background:#B07D74;width:40%;"></div>
+                  </div>
+                  <div class="theme-preview-label">Light</div>
+                </div>
+                <!-- Dark preview -->
+                <div class="theme-preview-card" id="preview-dark" onclick="setTheme('dark')">
+                  <div class="theme-preview-top" style="background:#0D1117;">
+                    <div class="theme-preview-dot" style="background:#B07D74;"></div>
+                    <div class="theme-preview-bar" style="background:#21262D;flex:1;"></div>
+                  </div>
+                  <div class="theme-preview-content" style="background:#161B22;">
+                    <div class="theme-preview-line" style="background:#21262D;width:80%;"></div>
+                    <div class="theme-preview-line" style="background:#21262D;width:60%;"></div>
+                    <div class="theme-preview-line" style="background:#B07D74;width:40%;"></div>
+                  </div>
+                  <div class="theme-preview-label">Dark</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Brand Color -->
         <div>
           <div class="modal-section-label">Brand Color</div>
@@ -6016,7 +6520,8 @@
       footerText: '',
       brandColor: '#B07D74',
       currency: '$',
-      dateFormat: 'MM/DD/YYYY'
+      dateFormat: 'MM/DD/YYYY',
+      colorTheme: 'light'
     };
 
     let APP = {
@@ -6190,6 +6695,8 @@
       document.getElementById('s-date-format').value    = s.dateFormat   || 'MM/DD/YYYY';
 
       document.getElementById('settings-modal').classList.add('open');
+      // Sync theme toggle to current saved state
+      updateThemeUI(APP.settings.colorTheme || 'light');
     }
 
     function closeSettings() {
@@ -6218,6 +6725,7 @@
         brandColor:   color,
         currency:     document.getElementById('s-currency').value,
         dateFormat:   document.getElementById('s-date-format').value,
+        colorTheme:   APP.settings.colorTheme || 'light',
       };
 
       saveState();
@@ -6247,6 +6755,9 @@
         '--border-accent',
         hexToRgba(s.brandColor, 0.35)
       );
+
+      // Apply color theme (light / dark)
+      applyThemeToDOM(s.colorTheme || 'light');
 
       // Topbar company name
       document.getElementById('topbar-company-name').textContent = s.companyName;
@@ -6315,6 +6826,55 @@
         metaEl.textContent = 'Open Event Info to get started';
         cdEl.style.display = 'none';
       }
+    }
+
+    // ============================================================
+    // THEME SWITCHER
+    // ============================================================
+
+    function setTheme(mode) {
+      // Save to settings immediately (live preview — no need to wait for Save)
+      APP.settings.colorTheme = mode;
+      saveState();
+      // Flag that the user has made a manual choice —
+      // system preference listener will no longer override this
+      localStorage.setItem('ecc_theme_chosen', '1');
+      applyThemeToDOM(mode);
+      updateThemeUI(mode);
+    }
+
+    function applyThemeToDOM(mode) {
+      const html = document.documentElement;
+
+      // Add transition class for smooth crossfade
+      html.classList.add('theme-transitioning');
+      setTimeout(() => html.classList.remove('theme-transitioning'), 350);
+
+      if (mode === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+      }
+
+      // Update PWA theme-color meta tag
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) {
+        metaTheme.content = mode === 'dark' ? '#0D1117' : '#B07D74';
+      }
+    }
+
+    function updateThemeUI(mode) {
+      // Pill buttons
+      const lightBtn = document.getElementById('theme-btn-light');
+      const darkBtn  = document.getElementById('theme-btn-dark');
+      if (lightBtn) lightBtn.classList.toggle('active', mode === 'light');
+      if (darkBtn)  darkBtn.classList.toggle('active',  mode === 'dark');
+
+      // Preview cards
+      const lightCard = document.getElementById('preview-light');
+      const darkCard  = document.getElementById('preview-dark');
+      if (lightCard) lightCard.classList.toggle('selected', mode === 'light');
+      if (darkCard)  darkCard.classList.toggle('selected',  mode === 'dark');
     }
 
     // ============================================================
@@ -10069,8 +10629,160 @@
     // ============================================================
     // INIT
     // ============================================================
+    // ============================================================
+    // ACCESS CODE GATE
+    // ============================================================
+
+    // ★ SET YOUR ACCESS CODE HERE ★
+    // Change this string to whatever code you give buyers.
+    // Example: 'ECC-2025-PLANNER' or 'WEDDING-PRO-2025'
+    const ACCESS_CODE = 'ECC-2025-PLANNER';
+
+    const GATE_KEY = 'ecc_unlocked_v1';
+
+    function checkGate() {
+      const unlocked = localStorage.getItem(GATE_KEY);
+      if (unlocked === 'true') {
+        // Already unlocked — hide gate immediately, no animation
+        const gate = document.getElementById('access-gate');
+        if (gate) gate.style.display = 'none';
+      }
+      // If not unlocked, gate stays visible (default state)
+    }
+
+    function submitGateCode() {
+      const input = document.getElementById('gate-input');
+      const entered = (input.value || '').trim().toUpperCase();
+      const correct = ACCESS_CODE.toUpperCase();
+
+      if (entered === correct) {
+        // Correct — save unlock, animate out
+        localStorage.setItem(GATE_KEY, 'true');
+        const gate = document.getElementById('access-gate');
+        gate.classList.add('unlocking');
+        setTimeout(() => {
+          gate.style.display = 'none';
+          showToast('Welcome to Event Command Center!', 'success');
+        }, 500);
+      } else {
+        // Wrong — shake and show error
+        const errEl  = document.getElementById('gate-error-msg');
+        input.classList.remove('gate-error');
+        // Force reflow to restart animation
+        void input.offsetWidth;
+        input.classList.add('gate-error');
+        errEl.textContent = 'Incorrect access code. Check your order confirmation and try again.';
+        input.select();
+        setTimeout(() => input.classList.remove('gate-error'), 400);
+      }
+    }
+
+    function clearGateError() {
+      const errEl = document.getElementById('gate-error-msg');
+      if (errEl) errEl.textContent = '';
+      const input = document.getElementById('gate-input');
+      if (input) input.classList.remove('gate-error');
+    }
+
+    function toggleGateVisibility() {
+      const input   = document.getElementById('gate-input');
+      const icon    = document.getElementById('gate-eye-icon');
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      // Swap eye icon to crossed-out version when visible
+      icon.innerHTML = isHidden
+        ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7
+                a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878
+                9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3
+                3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543
+                7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>`
+        : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542
+                7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>`;
+    }
+
+    // ============================================================
+    // PWA — Service Worker Registration
+    // ============================================================
+
+    if ('serviceWorker' in navigator) {
+      // Inline service worker — caches the app for offline use
+      const swCode = `
+        const CACHE = 'ecc-v1';
+        const ASSETS = ['./', './index.html'];
+
+        self.addEventListener('install', e => {
+          e.waitUntil(
+            caches.open(CACHE).then(c => c.addAll(ASSETS))
+          );
+          self.skipWaiting();
+        });
+
+        self.addEventListener('activate', e => {
+          e.waitUntil(
+            caches.keys().then(keys =>
+              Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+            )
+          );
+          self.clients.claim();
+        });
+
+        self.addEventListener('fetch', e => {
+          e.respondWith(
+            caches.match(e.request).then(cached => cached || fetch(e.request))
+          );
+        });
+      `;
+      const swBlob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl  = URL.createObjectURL(swBlob);
+      navigator.serviceWorker.register(swUrl).catch(() => {
+        // SW registration failures are non-fatal — app works without it
+      });
+    }
+
+    // ============================================================
+    // APP INIT
+    // ============================================================
+
     function init() {
+      // Check gate first — hides overlay if already unlocked
+      checkGate();
+
       loadState();
+
+      // ── System preference detection ──────────────────────────
+      // On FIRST launch only (ecc_theme_chosen not set yet),
+      // read the device's system dark/light preference and match it.
+      // Once the user manually picks a theme in Settings,
+      // ecc_theme_chosen is set and this block never runs again.
+      const userHasChosenTheme = !!localStorage.getItem('ecc_theme_chosen');
+      if (!userHasChosenTheme) {
+        const prefersDark = window.matchMedia &&
+                            window.matchMedia('(prefers-color-scheme: dark)').matches;
+        APP.settings.colorTheme = prefersDark ? 'dark' : 'light';
+        saveState();
+      }
+
+      // Live listener — follows system changes (sunrise/sunset auto mode)
+      // only while the user hasn't locked in a manual preference
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)')
+          .addEventListener('change', e => {
+            if (!localStorage.getItem('ecc_theme_chosen')) {
+              APP.settings.colorTheme = e.matches ? 'dark' : 'light';
+              saveState();
+              applyThemeToDOM(APP.settings.colorTheme);
+              updateThemeUI(APP.settings.colorTheme);
+            }
+          });
+      }
+
+      // Apply saved or detected theme immediately — before loader dismisses
+      applyThemeToDOM(APP.settings.colorTheme || 'light');
+
       applyBrandToUI();
       updateDashboard();
       updateLibraryBadge();
