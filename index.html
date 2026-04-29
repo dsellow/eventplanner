@@ -7,7 +7,7 @@
 
   <!-- ── PWA Meta Tags ── -->
   <meta name="application-name" content="Event Command Center" />
-  <meta name="description" content="Professional all-in-one event planning — budget, vendors, guests, run of show, seating, moodboard and more." />
+  <meta name="description" content="Professional all-in-one event planning — budget, vendors, guests, run of show, seating, moodboard and more. Visit theplannerworkspace.com" />
   <meta name="theme-color" content="#B07D74" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -22,66 +22,151 @@
   <!-- ── Apple Touch Icon (required for iOS Add to Home Screen) ── -->
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23B07D74'/%3E%3Ctext x='90' y='125' font-family='Georgia,serif' font-size='105' font-weight='bold' fill='white' text-anchor='middle'%3EE%3C/text%3E%3C/svg%3E" />
 
-  <!-- ── PWA Service Worker — registered inline ── -->
+  <!-- ── PWA Service Worker — offline-first ── -->
   <script>
-    if ('serviceWorker' in navigator) {
-      // Only register on a real served URL (not file://) 
-      if (location.protocol === 'https:' || location.hostname === 'localhost') {
-        const swCode = `
-          const CACHE_NAME = 'ecc-cache-v2';
+    (function() {
+      if (!('serviceWorker' in navigator)) return;
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') return;
 
-          self.addEventListener('install', e => {
-            self.skipWaiting();
-            e.waitUntil(
-              caches.open(CACHE_NAME).then(cache => {
-                return cache.addAll([location.href]).catch(() => {});
-              })
-            );
-          });
+      // ── Service worker source ──────────────────────────────────
+      // Uses cache-first strategy: serve from cache instantly,
+      // update cache in background when online.
+      const SW_SRC = `
+        const CACHE = 'ecc-v3';
+        const APP_URL = self.location.origin + self.location.pathname.replace(/\\/sw\\.js$/, '') || '/';
 
-          self.addEventListener('activate', e => {
-            e.waitUntil(
-              caches.keys().then(keys =>
-                Promise.all(
-                  keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-                )
-              ).then(() => self.clients.claim())
-            );
-          });
+        // On install: cache the app page and all its sub-resources
+        self.addEventListener('install', e => {
+          self.skipWaiting();
+          e.waitUntil(
+            caches.open(CACHE).then(cache => {
+              // Cache the main app URL — this is the critical one
+              return fetch(APP_URL, { cache: 'no-cache' })
+                .then(res => {
+                  if (res.ok) return cache.put(APP_URL, res);
+                })
+                .catch(() => {
+                  // Already in cache from a previous install — that's fine
+                  console.log('[ECC SW] Could not pre-fetch app during install (offline?) — using existing cache');
+                });
+            })
+          );
+        });
 
-          self.addEventListener('fetch', e => {
+        // On activate: clean up old caches, claim all clients immediately
+        self.addEventListener('activate', e => {
+          e.waitUntil(
+            caches.keys()
+              .then(keys => Promise.all(
+                keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+              ))
+              .then(() => self.clients.claim())
+          );
+        });
+
+        // On fetch: cache-first for same-origin, network-only for external
+        self.addEventListener('fetch', e => {
+          const req = e.request;
+          const url = new URL(req.url);
+
+          // Only intercept GET requests
+          if (req.method !== 'GET') return;
+
+          // External resources (fonts, etc.) — network first, fall back to cache
+          if (url.origin !== self.location.origin) {
             e.respondWith(
-              caches.match(e.request).then(cached => {
-                return cached || fetch(e.request).then(response => {
-                  if (response && response.status === 200 && response.type === 'basic') {
-                    const clone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+              fetch(req)
+                .then(res => {
+                  if (res && res.status === 200) {
+                    const clone = res.clone();
+                    caches.open(CACHE).then(c => c.put(req, clone));
                   }
-                  return response;
-                }).catch(() => cached);
-              })
+                  return res;
+                })
+                .catch(() => caches.match(req))
             );
-          });
-        `;
-        const swBlob = new Blob([swCode], { type: 'application/javascript' });
-        const swUrl  = URL.createObjectURL(swBlob);
-        navigator.serviceWorker.register(swUrl, { scope: './' })
-          .then(reg => {
-            console.log('ECC Service Worker registered, scope:', reg.scope);
-          })
-          .catch(err => {
-            console.warn('SW registration failed (non-fatal):', err);
-          });
-      }
-    }
+            return;
+          }
 
-    // ── Intercept and show install prompt ──
+          // Same-origin: cache-first, update in background (stale-while-revalidate)
+          e.respondWith(
+            caches.open(CACHE).then(cache =>
+              cache.match(req).then(cached => {
+                const networkFetch = fetch(req)
+                  .then(res => {
+                    if (res && res.status === 200) {
+                      cache.put(req, res.clone());
+                    }
+                    return res;
+                  })
+                  .catch(() => cached); // offline — return whatever we have
+
+                // Return cached version immediately if available
+                return cached || networkFetch;
+              })
+            )
+          );
+        });
+      `;
+
+      // ── Encode SW as base64 data URL ──────────────────────────
+      // This avoids blob:// scope restrictions on Android Chrome/Samsung Browser
+      const b64 = btoa(unescape(encodeURIComponent(SW_SRC)));
+      const swDataUrl = 'data:application/javascript;base64,' + b64;
+
+      navigator.serviceWorker.register(swDataUrl, { scope: '/' })
+        .then(reg => {
+          console.log('[ECC SW] Registered. Scope:', reg.scope);
+
+          // Force update check on page load
+          reg.update().catch(() => {});
+
+          // When a new SW is waiting, activate it immediately
+          if (reg.waiting) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            if (newSW) {
+              newSW.addEventListener('statechange', () => {
+                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                  newSW.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            }
+          });
+        })
+        .catch(err => {
+          // data: URL SW not supported — fall back to manual cache
+          console.warn('[ECC SW] Registration failed, attempting manual cache:', err.message);
+          _manualCacheFallback();
+        });
+
+      // ── Manual cache fallback for browsers that block data: SW ──
+      // Uses Cache API directly from the page context
+      function _manualCacheFallback() {
+        if (!('caches' in window)) return;
+        caches.open('ecc-v3').then(cache => {
+          // Cache the current page URL
+          const pageUrl = location.href.split('#')[0].split('?')[0];
+          fetch(pageUrl, { cache: 'no-cache' })
+            .then(res => { if (res.ok) cache.put(pageUrl, res); })
+            .catch(() => {});
+          // Cache Google Fonts
+          ['https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap']
+            .forEach(url => {
+              fetch(url).then(res => { if (res && res.ok) cache.put(url, res.clone()); }).catch(() => {});
+            });
+        });
+      }
+    })();
+
+    // ── PWA Install prompt ──────────────────────────────────────
     let _deferredInstallPrompt = null;
 
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault();
       _deferredInstallPrompt = e;
-      // Show our custom install button if it exists
       const btn = document.getElementById('pwa-install-btn');
       if (btn) btn.style.display = 'flex';
     });
@@ -106,7 +191,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts load when online; app falls back to system fonts offline gracefully -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" media="all" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" />
+  </noscript>
 
   <style>
     /* ============================================================
@@ -4140,7 +4229,7 @@
       <button id="gate-submit" onclick="submitGateCode()">Unlock Workspace</button>
       <p class="gate-footer-note">
         Your access code was included in your order confirmation.<br>
-        Need help? Visit <strong>EventCommandCenter.com/support</strong>
+        Need help? Visit <strong>theplannerworkspace.com/support</strong>
       </p>
     </div>
   </div>
@@ -4321,7 +4410,7 @@
         <div class="sidebar-planner-name" id="sidebar-planner-name">Your Name</div>
         <div class="sidebar-planner-role" id="sidebar-planner-role">Event Planner</div>
       </div>
-      <div class="sidebar-version">Event Command Center v1.0</div>
+      <div class="sidebar-version">Event Command Center v1.0 &nbsp;·&nbsp; © 2025 The Planner Workspace</div>
     </div>
   </nav>
 
@@ -6388,6 +6477,47 @@
               <label class="form-label" for="s-footer-text">Default Footer Text</label>
               <input class="form-input" id="s-footer-text" type="text" placeholder="e.g. Meridian Events Co. · Confidential" />
             </div>
+          </div>
+        </div>
+
+        <!-- Data Storage & Legal -->
+        <div>
+          <div class="modal-section-label">Data & Privacy</div>
+          <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:14px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--brand-primary);flex-shrink:0;margin-top:2px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <div>
+                <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);margin-bottom:5px;">Your Data Stays on Your Device</div>
+                <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.6;">
+                  All event data — budgets, vendors, guests, timelines, and everything else you enter — is stored exclusively in your browser's <strong>localStorage</strong>. Your data never leaves your device and is never transmitted to any server. We cannot access, view, or recover your data.
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--warning);flex-shrink:0;margin-top:2px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              <div>
+                <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);margin-bottom:5px;">Back Up Your Data Regularly</div>
+                <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.6;">
+                  Clearing your browser data will erase all your event information. Use <strong>Export Backup</strong> below after every major planning session and store the file in Google Drive, Dropbox, or email it to yourself.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <span style="font-size:0.72rem;color:var(--text-muted);">Legal:</span>
+            <a href="https://theplannerworkspace.com/terms" target="_blank" rel="noopener"
+              style="font-size:0.72rem;color:var(--brand-primary);font-weight:600;text-decoration:none;">
+              Terms of Use ↗
+            </a>
+            <span style="font-size:0.72rem;color:var(--text-muted);">·</span>
+            <a href="https://theplannerworkspace.com/privacy" target="_blank" rel="noopener"
+              style="font-size:0.72rem;color:var(--brand-primary);font-weight:600;text-decoration:none;">
+              Privacy Policy ↗
+            </a>
           </div>
         </div>
 
@@ -10990,6 +11120,48 @@
     }
 
     init();
+
+    // ── Prime the cache after first successful load ─────────────
+    // Runs once the page is fully rendered to ensure offline works
+    // on the very next visit even if SW registration was slow
+    window.addEventListener('load', () => {
+      if (!('caches' in window)) return;
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') return;
+
+      // Give SW 3 seconds to register, then prime cache directly as backup
+      setTimeout(() => {
+        caches.open('ecc-v3').then(cache => {
+          const pageUrl = location.href.split('#')[0].split('?')[0];
+          // Check if already cached
+          cache.match(pageUrl).then(cached => {
+            if (!cached) {
+              // Not cached yet — fetch and store now
+              fetch(pageUrl, { cache: 'no-cache' })
+                .then(res => {
+                  if (res && res.ok) {
+                    cache.put(pageUrl, res);
+                    console.log('[ECC] Page cached for offline use:', pageUrl);
+                  }
+                })
+                .catch(() => {}); // offline already — nothing to do
+            } else {
+              console.log('[ECC] Page already cached for offline use.');
+            }
+          });
+          // Also cache fonts if online
+          if (navigator.onLine) {
+            const fontUrl = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap';
+            cache.match(fontUrl).then(f => {
+              if (!f) {
+                fetch(fontUrl).then(res => {
+                  if (res && res.ok) cache.put(fontUrl, res.clone());
+                }).catch(() => {});
+              }
+            });
+          }
+        }).catch(() => {});
+      }, 3000);
+    });
 
   </script>
 </body>
