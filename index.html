@@ -484,6 +484,11 @@
       font-weight: 400;
       position: relative;
       border: 1px solid transparent;
+      /* Samsung Browser / Android touch fixes */
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(176,125,116,0.2);
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     .nav-item:hover {
@@ -1130,18 +1135,20 @@
     /* ============================================================
        RESPONSIVE
     ============================================================ */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       :root { --sidebar-w: 0px; }
 
       #sidebar {
         transform: translateX(-230px);
         width: 230px;
         transition: transform 0.25s ease;
+        z-index: 200;
       }
 
       #sidebar.mobile-open {
         transform: translateX(0);
         width: 230px;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
       }
 
       #main { margin-left: 0; padding: 16px; }
@@ -6819,7 +6826,7 @@
     }
 
     function toggleMobileSidebar() {
-      document.getElementById('sidebar').classList.toggle('mobile-open');
+      toggleMobileSidebarWithOverlay();
     }
 
     // ============================================================
@@ -7277,8 +7284,29 @@
     // RESPONSIVE: show/hide mobile button
     // ============================================================
     function checkMobile() {
-      const mq = window.matchMedia('(max-width: 768px)');
-      document.getElementById('mobile-menu-btn').style.display = mq.matches ? 'flex' : 'none';
+      const mq = window.matchMedia('(max-width: 900px)');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (btn) btn.style.display = mq.matches ? 'flex' : 'none';
+
+      // Add sidebar overlay if not already present
+      if (!document.getElementById('sidebar-overlay')) {
+        const overlay = document.createElement('div');
+        overlay.id = 'sidebar-overlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:199;background:rgba(0,0,0,0.4);display:none;';
+        overlay.addEventListener('click', () => {
+          document.getElementById('sidebar').classList.remove('mobile-open');
+          overlay.style.display = 'none';
+        });
+        document.body.appendChild(overlay);
+      }
+    }
+
+    function toggleMobileSidebarWithOverlay() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const isOpen  = sidebar.classList.contains('mobile-open');
+      sidebar.classList.toggle('mobile-open');
+      if (overlay) overlay.style.display = isOpen ? 'none' : 'block';
     }
 
     // ============================================================
@@ -11120,6 +11148,39 @@
     }
 
     init();
+
+    // ── Touch-safe navigation delegation ───────────────────────
+    // Samsung Internet and some Android browsers suppress onclick
+    // on non-anchor elements. This listener catches both touch
+    // and click at the document level so navigation always works.
+    (function wireTouchNav() {
+      function handleNavTap(e) {
+        // Walk up from tap target to find a nav-item
+        let el = e.target;
+        for (let i = 0; i < 5; i++) {
+          if (!el) break;
+          if (el.classList && el.classList.contains('nav-item')) {
+            const section = el.getAttribute('data-section');
+            if (section) {
+              e.preventDefault();
+              e.stopPropagation();
+              navigateTo(section);
+              // Close mobile sidebar + overlay
+              const sidebar = document.getElementById('sidebar');
+              const overlay = document.getElementById('sidebar-overlay');
+              if (sidebar) sidebar.classList.remove('mobile-open');
+              if (overlay) overlay.style.display = 'none';
+            }
+            return;
+          }
+          el = el.parentElement;
+        }
+      }
+
+      // Use both touchend and click for maximum compatibility
+      document.addEventListener('touchend',  handleNavTap, { passive: false });
+      document.addEventListener('click',     handleNavTap, false);
+    })();
 
     // ── Prime the cache after first successful load ─────────────
     // Runs once the page is fully rendered to ensure offline works
