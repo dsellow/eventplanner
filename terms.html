@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — The Planner Workspace</title>
+  <meta name="description" content="Terms of Use for The Planner Workspace and Event Command Center. Read our terms before purchasing or using our products." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://theplannerworkspace.com/terms" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --rose:       #B07D74;
+      --rose-dark:  #8C5E56;
+      --rose-light: #F0E6E3;
+      --rose-dim:   rgba(176,125,116,0.10);
+      --gold:       #C4996A;
+      --cream:      #FAF7F3;
+      --white:      #FFFFFF;
+      --charcoal:   #1E1814;
+      --ink:        #2C2420;
+      --mid:        #7A6E68;
+      --muted:      #B5ADA8;
+      --border:     rgba(176,125,116,0.18);
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.7;
+    }
+    a { color: var(--rose); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000;
+    }
+    nav {
+      position: sticky; top: 0;
+      background: rgba(250,247,243,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-mark {
+      width: 32px; height: 32px; background: var(--rose);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: white;
+    }
+    .nav-logo-text { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--ink); }
+    .nav-back { font-size: 0.8rem; font-weight: 500; color: var(--mid); display: flex; align-items: center; gap: 5px; }
+    .nav-back:hover { color: var(--rose); text-decoration: none; }
+    .doc-hero {
+      background: var(--ink); padding: 60px 24px 52px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .doc-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(176,125,116,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .doc-hero-eyebrow {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 12px;
+    }
+    .doc-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 600; color: white;
+      line-height: 1.1; margin-bottom: 14px;
+    }
+    .doc-hero-meta { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+    .doc-hero-meta strong { color: rgba(255,255,255,0.8); }
+    .doc-layout {
+      max-width: 820px; margin: 0 auto;
+      padding: 56px 24px 80px;
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 48px; align-items: start;
+    }
+    .doc-toc {
+      position: sticky; top: 80px;
+      background: white; border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+    }
+    .doc-toc-title {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+    }
+    .doc-toc a {
+      display: block; font-size: 0.78rem; color: var(--mid);
+      padding: 5px 0; border-bottom: 1px solid var(--border); transition: color 0.2s;
+    }
+    .doc-toc a:last-child { border-bottom: none; }
+    .doc-toc a:hover { color: var(--rose); text-decoration: none; }
+    .doc-body { min-width: 0; }
+    .doc-intro {
+      background: var(--rose-light); border-left: 3px solid var(--rose);
+      border-radius: 0 10px 10px 0; padding: 18px 20px; margin-bottom: 36px;
+      font-size: 0.9rem; line-height: 1.7; color: var(--ink);
+    }
+    .doc-section { margin-bottom: 40px; scroll-margin-top: 80px; }
+    .doc-section-num {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 6px;
+    }
+    .doc-section h2 {
+      font-family: var(--font-display); font-size: 1.5rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 14px; line-height: 1.2;
+    }
+    .doc-section p {
+      font-size: 0.9rem; color: var(--ink); line-height: 1.75; margin-bottom: 12px;
+    }
+    .doc-section p:last-child { margin-bottom: 0; }
+    .doc-section ul, .doc-section ol { padding-left: 20px; margin-bottom: 12px; }
+    .doc-section li {
+      font-size: 0.9rem; color: var(--ink); line-height: 1.75; margin-bottom: 5px;
+    }
+    .doc-section strong { font-weight: 700; color: var(--charcoal); }
+    .doc-rule { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+    .warning-box {
+      background: #FFF8F0; border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0; padding: 16px 20px; margin: 16px 0;
+      font-size: 0.85rem; color: var(--ink); line-height: 1.7;
+    }
+    .warning-box strong { color: #8B6020; }
+    .doc-contact-box {
+      background: var(--rose); border-radius: 14px;
+      padding: 28px 32px; margin-top: 40px; text-align: center;
+    }
+    .doc-contact-box h3 {
+      font-family: var(--font-display); font-size: 1.3rem;
+      font-weight: 600; color: white; margin-bottom: 8px;
+    }
+    .doc-contact-box p {
+      font-size: 0.85rem; color: rgba(255,255,255,0.75);
+      margin-bottom: 14px; line-height: 1.6;
+    }
+    .doc-contact-box a { color: white; font-weight: 700; font-size: 0.9rem; }
+    footer { background: var(--ink); padding: 32px 24px; text-align: center; }
+    .footer-logo { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: white; margin-bottom: 10px; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+    .footer-links a { font-size: 0.76rem; color: rgba(255,255,255,0.4); }
+    .footer-links a:hover { color: var(--rose); text-decoration: none; }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.25); }
+    @media (max-width: 720px) {
+      .doc-layout { grid-template-columns: 1fr; gap: 28px; }
+      .doc-toc { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://theplannerworkspace.com" class="nav-logo">
+      <div class="nav-logo-mark">E</div>
+      <span class="nav-logo-text">The Planner Workspace</span>
+    </a>
+    <a href="https://theplannerworkspace.com" class="nav-back">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <div class="doc-hero">
+    <div class="doc-hero-eyebrow">Legal Document</div>
+    <h1 class="doc-hero-title">Terms of Use</h1>
+    <p class="doc-hero-meta">
+      <strong>The Planner Workspace</strong> &nbsp;·&nbsp;
+      Last updated: <strong>January 1, 2025</strong> &nbsp;·&nbsp;
+      Effective: <strong>January 1, 2025</strong>
+    </p>
+  </div>
+
+  <div class="doc-layout">
+
+    <aside class="doc-toc">
+      <div class="doc-toc-title">Contents</div>
+      <a href="#acceptance">Acceptance</a>
+      <a href="#license">License Grant</a>
+      <a href="#access-code">Access Code</a>
+      <a href="#prohibited">Prohibited Uses</a>
+      <a href="#ip">Intellectual Property</a>
+      <a href="#data">Your Data</a>
+      <a href="#disclaimer">Disclaimer</a>
+      <a href="#liability">Limitation of Liability</a>
+      <a href="#refunds">Refund Policy</a>
+      <a href="#termination">Termination</a>
+      <a href="#governing">Governing Law</a>
+      <a href="#changes">Changes to Terms</a>
+      <a href="#contact">Contact</a>
+    </aside>
+
+    <div class="doc-body">
+
+      <div class="doc-intro">
+        These Terms of Use ("Terms") govern your access to and use of theplannerworkspace.com (the "Website") and Event Command Center (the "Product"), operated by The Planner Workspace ("we," "us," or "our"). By accessing the Website or purchasing and using the Product, you agree to be bound by these Terms. If you do not agree, do not use our Website or Product.
+      </div>
+
+      <div class="doc-section" id="acceptance">
+        <div class="doc-section-num">Section 01</div>
+        <h2>Acceptance of Terms</h2>
+        <p>By accessing theplannerworkspace.com, downloading Event Command Center, or entering an access code to use the Product, you confirm that:</p>
+        <ul>
+          <li>You are at least 18 years of age, or the age of legal majority in your jurisdiction</li>
+          <li>You have read, understood, and agree to these Terms</li>
+          <li>You have the legal authority to enter into this agreement</li>
+        </ul>
+        <p>These Terms constitute a binding legal agreement between you and The Planner Workspace.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="license">
+        <div class="doc-section-num">Section 02</div>
+        <h2>License Grant</h2>
+        <p>Upon purchase of Event Command Center, we grant you a <strong>limited, non-exclusive, non-transferable, revocable license</strong> to:</p>
+        <ul>
+          <li>Download and use one (1) copy of Event Command Center on your personal device(s)</li>
+          <li>Use the Product for your own personal or professional event planning purposes</li>
+          <li>Use the Product for an unlimited number of your own events</li>
+        </ul>
+        <p>This license is for <strong>your personal use only</strong>. It does not include the right to sublicense, transfer, sell, resell, or share the Product or access code with any third party.</p>
+        <p>Each individual who wishes to use Event Command Center must purchase their own license.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="access-code">
+        <div class="doc-section-num">Section 03</div>
+        <h2>Access Code</h2>
+        <p>Upon purchase, you will receive a unique access code to unlock Event Command Center. By accepting these Terms:</p>
+        <ul>
+          <li>Your access code is licensed to you personally and may not be shared</li>
+          <li>You are responsible for keeping your access code confidential</li>
+          <li>Sharing, posting, distributing, or selling your access code to any other person is a material breach of these Terms and may result in termination of your license without refund</li>
+          <li>You may use your access code on your own personal devices</li>
+        </ul>
+        <div class="warning-box">
+          <strong>Important:</strong> Access codes are issued on a one-code-per-purchase basis. If you believe your access code has been compromised or shared without your authorization, contact us immediately at support@theplannerworkspace.com.
+        </div>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="prohibited">
+        <div class="doc-section-num">Section 04</div>
+        <h2>Prohibited Uses</h2>
+        <p>You may NOT:</p>
+        <ul>
+          <li>Copy, reproduce, modify, or create derivative works of Event Command Center</li>
+          <li>Decompile, reverse-engineer, or attempt to extract the source code</li>
+          <li>Sell, resell, sublicense, or transfer the Product or access code to any third party</li>
+          <li>Share your access code publicly or distribute it through any channel</li>
+          <li>Use the Product to build a competing product or service</li>
+          <li>Remove, obscure, or alter any copyright, trademark, or proprietary notices</li>
+          <li>Use the Product for any unlawful purpose or in violation of any applicable law</li>
+          <li>Use the Website or Product to transmit spam, malware, or harmful content</li>
+          <li>Represent the Product as your own creation or claim authorship</li>
+        </ul>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="ip">
+        <div class="doc-section-num">Section 05</div>
+        <h2>Intellectual Property</h2>
+        <p>Event Command Center, including all HTML, CSS, JavaScript, design elements, layout, graphics, text, and documentation, is the exclusive intellectual property of The Planner Workspace and is protected by United States and international copyright law.</p>
+        <p>The name "Event Command Center," "The Planner Workspace," and all associated logos and branding are the property of The Planner Workspace.</p>
+        <p>Your purchase grants you a license to use the Product as described in Section 02. You do not acquire any ownership interest in the Product or any intellectual property rights therein.</p>
+        <p>Any feedback, suggestions, or ideas you provide about the Product may be used by us without obligation or compensation to you.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="data">
+        <div class="doc-section-num">Section 06</div>
+        <h2>Your Event Data</h2>
+        <p>All event data you enter into Event Command Center is stored exclusively in your browser's localStorage on your own device. We do not have access to, transmit, store, or back up your event data.</p>
+        <p><strong>You are solely responsible for:</strong></p>
+        <ul>
+          <li>Maintaining backups of your event data using the built-in Export Backup function</li>
+          <li>Any loss of data resulting from clearing browser data, device failure, or other circumstances</li>
+          <li>Ensuring your event data does not contain information that violates applicable privacy laws</li>
+        </ul>
+        <p>We expressly disclaim any liability for loss of your event data. The built-in Export Backup function is provided as a convenience — regular use is strongly recommended.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="disclaimer">
+        <div class="doc-section-num">Section 07</div>
+        <h2>Disclaimer of Warranties</h2>
+        <p>EVENT COMMAND CENTER IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR THAT THE PRODUCT WILL BE ERROR-FREE, UNINTERRUPTED, OR MEET YOUR SPECIFIC REQUIREMENTS.</p>
+        <p>We do not warrant that:</p>
+        <ul>
+          <li>The Product will be compatible with all browsers, devices, or operating systems</li>
+          <li>Any errors or defects will be corrected</li>
+          <li>The Product is free from viruses or other harmful components</li>
+          <li>The results obtained from use of the Product will be accurate or reliable</li>
+        </ul>
+        <p>Some jurisdictions do not allow the exclusion of implied warranties, so the above exclusions may not apply to you.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="liability">
+        <div class="doc-section-num">Section 08</div>
+        <h2>Limitation of Liability</h2>
+        <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE PLANNER WORKSPACE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO:</p>
+        <ul>
+          <li>Loss of event data or business information</li>
+          <li>Loss of revenue, profits, or business opportunities</li>
+          <li>Damage to your event, client relationships, or professional reputation</li>
+          <li>Costs of substitute products or services</li>
+          <li>Any other intangible losses</li>
+        </ul>
+        <p>OUR TOTAL LIABILITY TO YOU FOR ANY CLAIM ARISING FROM OR RELATED TO THESE TERMS OR THE PRODUCT SHALL NOT EXCEED THE AMOUNT YOU PAID FOR THE PRODUCT.</p>
+        <p>Some jurisdictions do not allow limitation of liability for consequential damages, so the above limitation may not apply in full.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="refunds">
+        <div class="doc-section-num">Section 09</div>
+        <h2>Refund Policy</h2>
+        <p><strong>All sales of digital products are final.</strong> Due to the digital nature of Event Command Center, we do not offer refunds once the product has been delivered or the access code has been disclosed.</p>
+        <p>Exceptions may be made at our sole discretion in the following limited circumstances:</p>
+        <ul>
+          <li>A confirmed technical defect that prevents the Product from functioning at all, reported within 7 days of purchase, that we are unable to resolve</li>
+          <li>Duplicate purchase made in error, reported within 24 hours</li>
+        </ul>
+        <p>To request an exception, contact us at <a href="mailto:support@theplannerworkspace.com">support@theplannerworkspace.com</a> within the applicable timeframe with your order number and a description of the issue.</p>
+        <p>Chargebacks or payment disputes filed through your bank or payment processor before contacting us for resolution may result in permanent suspension of your license.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="termination">
+        <div class="doc-section-num">Section 10</div>
+        <h2>Termination</h2>
+        <p>We may terminate or suspend your license to use Event Command Center immediately and without notice if you:</p>
+        <ul>
+          <li>Violate any provision of these Terms</li>
+          <li>Share, distribute, or sell your access code</li>
+          <li>Engage in conduct that we determine, in our sole discretion, is harmful to us or other users</li>
+        </ul>
+        <p>Upon termination, your right to use the Product ceases immediately. Provisions of these Terms that by their nature should survive termination (including intellectual property, disclaimer of warranties, limitation of liability, and governing law) shall survive.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="governing">
+        <div class="doc-section-num">Section 11</div>
+        <h2>Governing Law and Dispute Resolution</h2>
+        <p>These Terms are governed by and construed in accordance with the laws of the United States and the state of Maryland, without regard to conflict of law principles.</p>
+        <p>Any dispute arising from these Terms or your use of the Product shall first be attempted to be resolved through good-faith negotiation by contacting us at <a href="mailto:support@theplannerworkspace.com">support@theplannerworkspace.com</a>.</p>
+        <p>If negotiation fails, disputes shall be resolved through binding arbitration in accordance with the American Arbitration Association's rules, conducted in Maryland. You waive any right to participate in a class action lawsuit or class-wide arbitration.</p>
+        <p>Notwithstanding the foregoing, either party may seek injunctive or other equitable relief in a court of competent jurisdiction to protect intellectual property rights.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="changes">
+        <div class="doc-section-num">Section 12</div>
+        <h2>Changes to These Terms</h2>
+        <p>We reserve the right to update these Terms at any time. When we do, we will update the "Last updated" date at the top of this page. For material changes, we will notify users via email if we have your email address on file.</p>
+        <p>Your continued use of the Product after any changes constitutes your acceptance of the revised Terms. If you do not agree to updated Terms, you must discontinue use of the Product.</p>
+      </div>
+
+      <hr class="doc-rule" />
+
+      <div class="doc-section" id="contact">
+        <div class="doc-section-num">Section 13</div>
+        <h2>Contact</h2>
+        <p>For questions about these Terms, to report a violation, or for support:</p>
+        <ul>
+          <li><strong>Support:</strong> <a href="mailto:support@theplannerworkspace.com">support@theplannerworkspace.com</a></li>
+          <li><strong>Legal:</strong> <a href="mailto:legal@theplannerworkspace.com">legal@theplannerworkspace.com</a></li>
+          <li><strong>Website:</strong> <a href="https://theplannerworkspace.com">theplannerworkspace.com</a></li>
+        </ul>
+      </div>
+
+      <div class="doc-contact-box">
+        <h3>Questions About These Terms?</h3>
+        <p>We're a small business and we're happy to clarify anything. Reach out directly — we respond promptly.</p>
+        <a href="mailto:support@theplannerworkspace.com">support@theplannerworkspace.com</a>
+      </div>
+
+    </div><!-- /.doc-body -->
+  </div><!-- /.doc-layout -->
+
+  <footer>
+    <div class="footer-logo">The Planner Workspace</div>
+    <div class="footer-links">
+      <a href="https://theplannerworkspace.com">Home</a>
+      <a href="https://theplannerworkspace.com/terms">Terms of Use</a>
+      <a href="https://theplannerworkspace.com/privacy">Privacy Policy</a>
+      <a href="mailto:support@theplannerworkspace.com">Support</a>
+    </div>
+    <p class="footer-copy">© 2025 The Planner Workspace. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
