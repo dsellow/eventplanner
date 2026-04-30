@@ -1,1 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ── SEO Meta Tags ── -->
+  <title>Event Command Center — Professional Event Planning Software for Wedding & Corporate Planners</title>
+  <meta name="description" content="Stop juggling spreadsheets. Event Command Center is the all-in-one event planning tool for professional wedding planners, corporate event managers, and family celebration coordinators. Budget tracking, vendor management, guest lists, seating charts, run of show, and more — in one file." />
+  <meta name="keywords" content="event planning software, wedding planner tool, event management app, wedding day timeline, vendor management, guest list management, event budget tracker, seating chart tool, run of show template, corporate event planner, event coordinator software, wedding planning spreadsheet alternative, event planning checklist, event planner productivity tool" />
+  <meta name="author" content="Event Command Center" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://theplannerworkspace.com" />
+
+  <!-- ── Open Graph (Facebook & Instagram Link Previews) ── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theplannerworkspace.com" />
+  <meta property="og:title" content="Stop Managing Events in Spreadsheets. There's a Better Way." />
+  <meta property="og:description" content="Event Command Center gives professional event planners one organized workspace for every event — budget, vendors, guests, timeline, seating chart, and moodboard. No subscriptions. No logins. Yours forever." />
+  <meta property="og:image" content="https://theplannerworkspace.com/og-image.jpg" />
+  <meta property="og:site_name" content="Event Command Center" />
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Stop Managing Events in Spreadsheets. There's a Better Way." />
+  <meta name="twitter:description" content="The all-in-one event planning tool for professional wedding, corporate, and family event coordinators." />
+
+  <!-- ── Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design System ── */
+    :root {
+      --rose:       #B07D74;
+      --rose-dark:  #8C5E56;
+      --rose-light: #F0E6E3;
+      --rose-dim:   rgba(176,125,116,0.10);
+      --gold:       #C4996A;
+      --gold-light: #F5E8D6;
+      --cream:      #FAF7F3;
+      --white:      #FFFFFF;
+      --charcoal:   #1E1814;
+      --ink:        #2C2420;
+      --mid:        #7A6E68;
+      --muted:      #B5ADA8;
+      --border:     rgba(176,125,116,0.18);
+      --sage:       #8FA891;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+
+      --max-w: 1160px;
+      --section-pad: 96px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ────────────────────────────────────────
+       NAV
+    ──────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,247,243,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 4px 24px rgba(176,125,116,0.12);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--mid);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--rose); }
+
+    .nav-cta {
+      background: var(--rose);
+      color: white !important;
+      padding: 9px 20px;
+      border-radius: 99px;
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      transition: all 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--rose-dark) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(176,125,116,0.35) !important;
+      color: white !important;
+    }
+
+    /* ────────────────────────────────────────
+       HERO
+    ──────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Large background text */
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: clamp(120px, 18vw, 280px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(176,125,116,0.055);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+
+    /* Decorative circles */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(176,125,116,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -80px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,153,106,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 22px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--rose);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--mid);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--rose);
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 17px 36px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    .btn-primary:hover {
+      background: var(--rose-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(176,125,116,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--mid);
+      text-decoration: none;
+      width: fit-content;
+      transition: color 0.2s;
+    }
+
+    .btn-secondary:hover { color: var(--rose); }
+
+    .btn-secondary svg { transition: transform 0.2s; }
+    .btn-secondary:hover svg { transform: translateX(4px); }
+
+    .hero-price-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* Hero app preview */
+    .hero-preview {
+      position: relative;
+    }
+
+    .hero-preview-frame {
+      background: white;
+      border-radius: 16px;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.04),
+        0 8px 24px rgba(176,125,116,0.12),
+        0 32px 64px rgba(176,125,116,0.10);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transform: perspective(1200px) rotateY(-4deg) rotateX(2deg);
+      transition: transform 0.4s ease;
+    }
+
+    .hero-preview-frame:hover {
+      transform: perspective(1200px) rotateY(-2deg) rotateX(1deg) translateY(-4px);
+    }
+
+    /* Fake browser chrome */
+    .browser-bar {
+      height: 32px;
+      background: #f0ebe7;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+    }
+
+    .browser-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .browser-url {
+      flex: 1;
+      margin: 0 12px;
+      height: 16px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+    }
+
+    .browser-url span {
+      font-size: 8px;
+      color: var(--muted);
+      font-family: var(--font-body);
+    }
+
+    /* Mini app inside frame */
+    .mini-app {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      height: 300px;
+      background: #F5F0EC;
+    }
+
+    .mini-sidebar {
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 8px 0;
+    }
+
+    .mini-nav-item {
+      padding: 5px 10px;
+      font-size: 6.5px;
+      color: var(--mid);
+      font-family: var(--font-body);
+      cursor: default;
+    }
+
+    .mini-nav-item.active {
+      background: var(--rose-dim);
+      color: var(--rose);
+      font-weight: 700;
+    }
+
+    .mini-nav-label {
+      padding: 8px 10px 3px;
+      font-size: 5.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .mini-content { padding: 10px; overflow: hidden; }
+
+    .mini-section-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .mini-card {
+      background: white;
+      border-radius: 5px;
+      padding: 5px;
+      border: 1px solid var(--border);
+    }
+
+    .mini-card-top {
+      height: 2px;
+      border-radius: 1px;
+      margin-bottom: 4px;
+    }
+
+    .mini-card-val {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .mini-card-lbl {
+      font-size: 5px;
+      color: var(--muted);
+      font-family: var(--font-body);
+    }
+
+    .mini-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .mini-panel {
+      background: white;
+      border-radius: 5px;
+      padding: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .mini-panel-title {
+      font-size: 5.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .mini-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 3px;
+    }
+
+    .mini-checkbox {
+      width: 6px;
+      height: 6px;
+      border-radius: 1.5px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .mini-row-text {
+      font-size: 5.5px;
+      color: var(--ink);
+      font-family: var(--font-body);
+    }
+
+    .mini-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Floating badge */
+    .hero-badge {
+      position: absolute;
+      bottom: -16px;
+      left: -20px;
+      background: white;
+      border-radius: 12px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .hero-badge-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--rose-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rose);
+      flex-shrink: 0;
+    }
+
+    .hero-badge-text strong {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .hero-badge-text span {
+      font-size: 0.68rem;
+      color: var(--mid);
+    }
+
+    .hero-badge-2 {
+      position: absolute;
+      top: 20px;
+      right: -16px;
+      background: var(--rose);
+      color: white;
+      border-radius: 10px;
+      padding: 10px 14px;
+      box-shadow: 0 6px 20px rgba(176,125,116,0.4);
+      animation: float 4s ease-in-out infinite 1.5s;
+    }
+
+    .hero-badge-2 strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .hero-badge-2 span {
+      font-size: 0.62rem;
+      opacity: 0.85;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    /* ────────────────────────────────────────
+       PAIN SECTION
+    ──────────────────────────────────────── */
+    .pain-section {
+      padding: var(--section-pad) 0;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pain-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    }
+
+    .pain-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    }
+
+    .pain-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .pain-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      line-height: 1.15;
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+
+    .pain-title em { font-style: italic; color: var(--rose); }
+
+    .pain-intro {
+      text-align: center;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 560px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .pain-card {
+      padding: 36px 28px;
+      background: rgba(255,255,255,0.03);
+      transition: background 0.3s;
+    }
+
+    .pain-card:hover {
+      background: rgba(176,125,116,0.08);
+    }
+
+    .pain-card-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(176,125,116,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      color: var(--rose);
+    }
+
+    .pain-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .pain-card p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .pain-arrow {
+      text-align: center;
+      padding: 40px 0 16px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ────────────────────────────────────────
+       FEATURES SECTION
+    ──────────────────────────────────────── */
+    .features-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rose);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--ink);
+      text-align: center;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .section-title em { font-style: italic; color: var(--rose); }
+
+    .section-sub {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--mid);
+      max-width: 540px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--rose), var(--gold));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(176,125,116,0.14);
+      border-color: var(--rose);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-number {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--rose);
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .feature-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--rose-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--rose);
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .feature-card p {
+      font-size: 0.84rem;
+      line-height: 1.7;
+      color: var(--mid);
+    }
+
+    /* ────────────────────────────────────────
+       WHO THIS IS FOR
+    ──────────────────────────────────────── */
+    .audience-section {
+      padding: var(--section-pad) 0;
+      background: var(--rose-light);
+      position: relative;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .audience-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid rgba(176,125,116,0.20);
+      transition: all 0.3s;
+    }
+
+    .audience-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(176,125,116,0.15);
+    }
+
+    .audience-icon {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rose);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .audience-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .audience-card p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--mid);
+      margin-bottom: 16px;
+    }
+
+    .audience-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .audience-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: var(--rose-light);
+      color: var(--rose);
+      border: 1px solid rgba(176,125,116,0.2);
+    }
+
+    /* ────────────────────────────────────────
+       SECTIONS LIST
+    ──────────────────────────────────────── */
+    .sections-list {
+      padding: var(--section-pad) 0;
+    }
+
+    .sections-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .sections-left h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .sections-left h2 em { font-style: italic; color: var(--rose); }
+
+    .sections-left p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--mid);
+      margin-bottom: 28px;
+    }
+
+    .sections-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .section-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .section-item:hover {
+      border-color: var(--rose);
+      background: var(--rose-dim);
+    }
+
+    .section-item-num {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--rose);
+      min-width: 20px;
+    }
+
+    .section-item-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    /* ────────────────────────────────────────
+       TESTIMONIALS PLACEHOLDER
+    ──────────────────────────────────────── */
+    .social-proof {
+      padding: var(--section-pad) 0;
+      background: white;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 56px;
+    }
+
+    .stat-cell {
+      background: white;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--rose);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--mid);
+      line-height: 1.4;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .testimonial {
+      background: var(--cream);
+      border-radius: 14px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: '\201C';
+      position: absolute;
+      top: 16px;
+      left: 22px;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--rose-light);
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--ink);
+      margin-bottom: 18px;
+      padding-top: 12px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--rose-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--rose);
+      flex-shrink: 0;
+    }
+
+    .testimonial-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .testimonial-role {
+      font-size: 0.72rem;
+      color: var(--mid);
+    }
+
+    .stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 10px;
+    }
+
+    .star { color: var(--gold); font-size: 0.8rem; }
+
+    /* ────────────────────────────────────────
+       FREE LEAD MAGNET
+    ──────────────────────────────────────── */
+    .lead-magnet {
+      padding: var(--section-pad) 0;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lead-magnet::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(176,125,116,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .lead-magnet-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .lead-magnet-left h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .lead-magnet-left h2 em { font-style: italic; color: var(--rose); }
+
+    .lead-magnet-left p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+
+    .checklist-preview {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(176,125,116,0.25);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .checklist-preview-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 14px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .checklist-item:last-child { border-bottom: none; }
+
+    .check-box {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1.5px solid rgba(176,125,116,0.4);
+      flex-shrink: 0;
+    }
+
+    .check-box.checked {
+      background: var(--sage);
+      border-color: var(--sage);
+      position: relative;
+    }
+
+    .check-box.checked::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 3px;
+      width: 6px; height: 4px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg);
+    }
+
+    .checklist-text {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .email-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .email-form input {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(176,125,116,0.3);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: white;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .email-form input::placeholder { color: rgba(255,255,255,0.35); }
+
+    .email-form input:focus {
+      border-color: var(--rose);
+      background: rgba(176,125,116,0.08);
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 15px 28px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: center;
+    }
+
+    .btn-white:hover {
+      background: var(--rose-light);
+      transform: translateY(-1px);
+    }
+
+    .form-disclaimer {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.5;
+    }
+
+    /* ────────────────────────────────────────
+       PRICING
+    ──────────────────────────────────────── */
+    .pricing {
+      padding: var(--section-pad) 0;
+    }
+
+    .pricing-card {
+      max-width: 580px;
+      margin: 0 auto;
+      background: white;
+      border: 2px solid var(--rose);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(176,125,116,0.18);
+    }
+
+    .pricing-header {
+      background: var(--rose);
+      padding: 32px 40px;
+      text-align: center;
+    }
+
+    .pricing-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 12px;
+    }
+
+    .pricing-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .pricing-subtitle {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .pricing-body {
+      padding: 36px 40px;
+    }
+
+    .pricing-amount {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .pricing-currency {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--rose);
+      vertical-align: top;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .pricing-number {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .pricing-period {
+      font-size: 0.8rem;
+      color: var(--mid);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .pricing-period strong {
+      color: var(--rose);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 0.86rem;
+      color: var(--ink);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-features li:last-child { border-bottom: none; }
+
+    .pricing-check {
+      width: 18px;
+      height: 18px;
+      background: var(--sage);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-check svg { width: 10px; height: 10px; }
+
+    .pricing-cta {
+      display: block;
+      background: var(--rose);
+      color: white;
+      text-align: center;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: all 0.25s;
+      margin-bottom: 14px;
+    }
+
+    .pricing-cta:hover {
+      background: var(--rose-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(176,125,116,0.35);
+    }
+
+    .pricing-guarantee {
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* ────────────────────────────────────────
+       FAQ
+    ──────────────────────────────────────── */
+    .faq-section {
+      padding: var(--section-pad) 0;
+      background: var(--cream);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 20px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      transition: color 0.2s;
+    }
+
+    .faq-question:hover { color: var(--rose); }
+
+    .faq-question .faq-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mid);
+      flex-shrink: 0;
+      transition: all 0.2s;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .faq-question.open .faq-icon {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: white;
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--mid);
+      padding: 0 0 20px;
+      display: none;
+    }
+
+    .faq-answer.open { display: block; }
+
+    /* ────────────────────────────────────────
+       FINAL CTA
+    ──────────────────────────────────────── */
+    .final-cta {
+      padding: 100px 0;
+      text-align: center;
+      background: var(--rose);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: 'Plan';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: 28vw;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.05);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .final-cta-inner { position: relative; z-index: 2; }
+
+    .final-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 600;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .final-cta h2 em { font-style: italic; opacity: 0.75; }
+
+    .final-cta p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.72);
+      max-width: 500px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .btn-white-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: var(--rose-dark);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.25s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-white-outline:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(0,0,0,0.2);
+    }
+
+    .final-sub {
+      margin-top: 18px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────── */
+    footer {
+      padding: 36px 24px;
+      background: var(--ink);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--rose); }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ────────────────────────────────────────
+       SCROLL ANIMATIONS
+    ──────────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stagger > * {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .stagger.visible > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0s; }
+    .stagger.visible > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.1s; }
+    .stagger.visible > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.2s; }
+    .stagger.visible > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.3s; }
+    .stagger.visible > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay:0.4s; }
+    .stagger.visible > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay:0.5s; }
+
+    /* ────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-preview { display: none; }
+      .pain-grid { grid-template-columns: 1fr; gap: 1px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .audience-grid { grid-template-columns: 1fr; gap: 16px; }
+      .sections-inner { grid-template-columns: 1fr; gap: 40px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .lead-magnet-inner { grid-template-columns: 1fr; gap: 40px; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      :root { --section-pad: 64px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .sections-items { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <div class="nav-logo-mark">E</div>
+      <span class="nav-logo-text">Event Command Center</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#who">Who It's For</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="https://theplannerworkspace.com/get" class="nav-cta">Get Instant Access</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="home">
+    <div class="hero-bg-text">Plan</div>
+    <div class="container">
+      <div class="hero-inner">
+
+        <div class="hero-left">
+          <div class="hero-eyebrow">Professional Event Planning Tool</div>
+          <h1>
+            Stop Living in<br>
+            <em>Scattered Spreadsheets.</em><br>
+            Start Planning With Clarity.
+          </h1>
+          <p class="hero-sub">
+            Event Command Center is the all-in-one digital workspace for professional wedding planners,
+            corporate event coordinators, and family celebration managers. Every tool you need —
+            budget, vendors, guests, timeline, seating, and moodboard — organized in one place.
+          </p>
+          <div class="hero-actions">
+            <a href="https://theplannerworkspace.com/get" class="btn-primary">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+              Get Instant Access — $47
+            </a>
+            <a href="https://theplannerworkspace.com/checklist" class="btn-secondary">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Free Download — The 47-Point Event Day Checklist
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <p class="hero-price-note">One-time purchase · No subscription · No login required · Use offline</p>
+          </div>
+        </div>
+
+        <div class="hero-preview">
+          <!-- Browser frame mockup -->
+          <div class="hero-preview-frame">
+            <div class="browser-bar">
+              <div class="browser-dot" style="background:#FF5F56;"></div>
+              <div class="browser-dot" style="background:#FFBD2E;"></div>
+              <div class="browser-dot" style="background:#27C93F;"></div>
+              <div class="browser-url">
+                <span>🔒 theplannerworkspace.com</span>
+              </div>
+            </div>
+            <div class="mini-app">
+              <div class="mini-sidebar">
+                <div class="mini-nav-label">Overview</div>
+                <div class="mini-nav-item active">Dashboard</div>
+                <div class="mini-nav-item">My Events</div>
+                <div class="mini-nav-item">Event Info</div>
+                <div class="mini-nav-label">Operations</div>
+                <div class="mini-nav-item">Budget</div>
+                <div class="mini-nav-item">Vendors</div>
+                <div class="mini-nav-item">Tasks</div>
+                <div class="mini-nav-item">Run of Show</div>
+                <div class="mini-nav-label">People</div>
+                <div class="mini-nav-item">Guests</div>
+                <div class="mini-nav-item">Seating</div>
+                <div class="mini-nav-label">Creative</div>
+                <div class="mini-nav-item">Moodboard</div>
+              </div>
+              <div class="mini-content">
+                <div class="mini-section-title">Dashboard</div>
+                <div class="mini-cards">
+                  <div class="mini-card">
+                    <div class="mini-card-top" style="background:#8FA891;"></div>
+                    <div class="mini-card-val">72%</div>
+                    <div class="mini-card-lbl">Budget Health</div>
+                  </div>
+                  <div class="mini-card">
+                    <div class="mini-card-top" style="background:#C4996A;"></div>
+                    <div class="mini-card-val">8/12</div>
+                    <div class="mini-card-lbl">Vendors</div>
+                  </div>
+                  <div class="mini-card">
+                    <div class="mini-card-top" style="background:#B07D74;"></div>
+                    <div class="mini-card-val">48%</div>
+                    <div class="mini-card-lbl">Tasks Done</div>
+                  </div>
+                  <div class="mini-card">
+                    <div class="mini-card-top" style="background:#8FA891;"></div>
+                    <div class="mini-card-val">142</div>
+                    <div class="mini-card-lbl">Confirmed</div>
+                  </div>
+                </div>
+                <div class="mini-panels">
+                  <div class="mini-panel">
+                    <div class="mini-panel-title">Next Tasks Due</div>
+                    <div class="mini-row"><div class="mini-checkbox"></div><div class="mini-row-text">Confirm caterer headcount</div></div>
+                    <div class="mini-row"><div class="mini-checkbox"></div><div class="mini-row-text">Send run of show</div></div>
+                    <div class="mini-row"><div class="mini-checkbox"></div><div class="mini-row-text" style="color:#C25D5D;">Pay AV balance</div></div>
+                    <div class="mini-row"><div class="mini-checkbox"></div><div class="mini-row-text">Brief venue staff</div></div>
+                  </div>
+                  <div class="mini-panel">
+                    <div class="mini-panel-title">Vendor Attention</div>
+                    <div class="mini-row"><div class="mini-dot" style="background:#C25D5D;"></div><div class="mini-row-text">Premier AV — No contract</div></div>
+                    <div class="mini-row"><div class="mini-dot" style="background:#C4996A;"></div><div class="mini-row-text">Bloom Florals — Dep. due</div></div>
+                    <div class="mini-row"><div class="mini-dot" style="background:#C4996A;"></div><div class="mini-row-text">Elite Photography</div></div>
+                    <div class="mini-row"><div class="mini-dot" style="background:#C25D5D;"></div><div class="mini-row-text">Grand Ballroom</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating badges -->
+          <div class="hero-badge">
+            <div class="hero-badge-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="hero-badge-text">
+              <strong>14 Planning Sections</strong>
+              <span>Everything in one workspace</span>
+            </div>
+          </div>
+          <div class="hero-badge-2">
+            <strong>No Subscription</strong>
+            <span>One-time purchase</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PAIN SECTION ── -->
+  <section class="pain-section" id="pain">
+    <div class="container">
+      <p class="pain-eyebrow">Sound Familiar?</p>
+      <h2 class="pain-title fade-up">
+        The Spreadsheet Problem<br>
+        Is <em>Costing You</em> More Than You Think
+      </h2>
+      <p class="pain-intro fade-up">
+        Most event planners are managing their entire business across 6–12 different spreadsheets, apps, and documents. Here's what that's actually costing you.
+      </p>
+      <div class="pain-grid stagger">
+        <div class="pain-card">
+          <div class="pain-card-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h3>Fragmented Information</h3>
+          <p>Budget in Google Sheets. Vendors in a different spreadsheet. Guests in a third. Timeline in a Word doc. One change means updating five files — and something always gets missed.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3>Time Wasted on Admin</h3>
+          <p>Hours spent reformatting spreadsheets, cross-referencing files, and building templates from scratch for every new event. Time that should be spent on clients and creativity.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-card-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <h3>Details That Fall Through</h3>
+          <p>An unsigned vendor contract. A deposit due date that slipped by. A guest with a severe allergy who didn't get flagged. The things that fragmented systems don't catch until it's too late.</p>
+        </div>
+      </div>
+      <p class="pain-arrow">↓ &nbsp; There is a better way &nbsp; ↓</p>
+    </div>
+  </section>
+
+  <!-- ── FEATURES SECTION ── -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <p class="section-eyebrow">14 Integrated Sections</p>
+      <h2 class="section-title fade-up">Every Tool Your Events Need,<br><em>All in One Place</em></h2>
+      <p class="section-sub fade-up">
+        Built by an event professional for event professionals. No subscriptions, no logins, no learning curve.
+        Open the file — start planning.
+      </p>
+      <div class="features-grid stagger">
+        <div class="feature-card">
+          <div class="feature-number">01</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 13a1 1 0 011-1h4a1 1 0 011 1v6a1 1 0 01-1 1h-4a1 1 0 01-1-1v-6z"/>
+            </svg>
+          </div>
+          <h3>Live Event Dashboard</h3>
+          <p>Real-time health scorecards for budget, vendors, tasks, RSVPs, and run of show. Auto-alerts for overdue items before they become problems.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">02</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3>Budget Tracker</h3>
+          <p>Line-item budget management with estimated vs. quoted vs. paid tracking. Deposit toggles, overdue alerts, category breakdown, and CSV export.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">03</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <h3>Vendor Master</h3>
+          <p>Your complete vendor directory with contract status tracking (Pending / Sent / Signed), payment schedules, contact info, and automated payment alerts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">04</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3>Task Timeline</h3>
+          <p>120+ pre-loaded professional tasks across 8 phases from 90 days out through post-event. Load defaults in one click and customize for any event type.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">05</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3>Run of Show</h3>
+          <p>Minute-by-minute event day timeline with internal and client-facing views. One-click branded print export your entire vendor team can reference.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-number">06</div>
+          <div class="feature-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <h3>Guest List & Seating</h3>
+          <p>Complete RSVP management, dietary restrictions, meal preferences, +1 tracking, VIP flags, and seat-by-seat seating chart with smart guest autocomplete.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AUDIENCE SECTION ── -->
+  <section class="audience-section" id="who">
+    <div class="container">
+      <p class="section-eyebrow">Who It's Built For</p>
+      <h2 class="section-title fade-up">Designed for the Professional<br><em>Event Planner</em></h2>
+      <p class="section-sub fade-up">
+        Whether you're coordinating an intimate wedding or a 500-person corporate gala, Event Command Center scales to every event type and every planning style.
+      </p>
+      <div class="audience-grid stagger">
+        <div class="audience-card">
+          <span class="audience-icon">♡</span>
+          <h3>Wedding Planners</h3>
+          <p>From engagement through reception, manage every vendor, every guest, and every detail of your couple's most important day — with a seating chart that handles +1s automatically and a run of show your photographer will actually follow.</p>
+          <div class="audience-tags">
+            <span class="audience-tag">Weddings</span>
+            <span class="audience-tag">Elopements</span>
+            <span class="audience-tag">Receptions</span>
+            <span class="audience-tag">Rehearsal Dinners</span>
+          </div>
+        </div>
+        <div class="audience-card">
+          <span class="audience-icon">◆</span>
+          <h3>Corporate Event Managers</h3>
+          <p>Manage galas, conferences, fundraisers, and product launches with the same rigor your executives expect. Track AV contracts, catering minimums, speaker logistics, and branded run of show documents — all in one workspace.</p>
+          <div class="audience-tags">
+            <span class="audience-tag">Galas</span>
+            <span class="audience-tag">Conferences</span>
+            <span class="audience-tag">Fundraisers</span>
+            <span class="audience-tag">Launches</span>
+          </div>
+        </div>
+        <div class="audience-card">
+          <span class="audience-icon">✦</span>
+          <h3>Family & Social Events</h3>
+          <p>Birthday milestones, anniversary parties, baby showers, and family reunions deserve professional-level organization. Build seating charts, manage dietary needs, and coordinate vendors without the corporate overhead.</p>
+          <div class="audience-tags">
+            <span class="audience-tag">Birthdays</span>
+            <span class="audience-tag">Anniversaries</span>
+            <span class="audience-tag">Baby Showers</span>
+            <span class="audience-tag">Reunions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ALL 14 SECTIONS ── -->
+  <section class="sections-list" id="sections">
+    <div class="container">
+      <div class="sections-inner">
+        <div class="sections-left fade-up">
+          <p class="section-eyebrow">Complete Feature Set</p>
+          <h2>Everything Replaced.<br><em>Nothing Missing.</em></h2>
+          <p>Event Command Center replaces every spreadsheet, every sticky note, every color-coded calendar, and every separate app — in a single organized workspace you can use on any device, online or offline.</p>
+          <a href="https://theplannerworkspace.com/get" class="btn-primary">
+            Get Instant Access
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+        <div class="sections-items stagger">
+          <div class="section-item"><span class="section-item-num">01</span><span class="section-item-text">Event Dashboard</span></div>
+          <div class="section-item"><span class="section-item-num">02</span><span class="section-item-text">My Events Library</span></div>
+          <div class="section-item"><span class="section-item-num">03</span><span class="section-item-text">Event Info & Details</span></div>
+          <div class="section-item"><span class="section-item-num">04</span><span class="section-item-text">Budget Tracker</span></div>
+          <div class="section-item"><span class="section-item-num">05</span><span class="section-item-text">Vendor Master</span></div>
+          <div class="section-item"><span class="section-item-num">06</span><span class="section-item-text">Task Timeline</span></div>
+          <div class="section-item"><span class="section-item-num">07</span><span class="section-item-text">Run of Show</span></div>
+          <div class="section-item"><span class="section-item-num">08</span><span class="section-item-text">Guest List & RSVP</span></div>
+          <div class="section-item"><span class="section-item-num">09</span><span class="section-item-text">Seating Chart</span></div>
+          <div class="section-item"><span class="section-item-num">10</span><span class="section-item-text">Meal Planner</span></div>
+          <div class="section-item"><span class="section-item-num">11</span><span class="section-item-text">Venue & Logistics</span></div>
+          <div class="section-item"><span class="section-item-num">12</span><span class="section-item-text">Moodboard</span></div>
+          <div class="section-item"><span class="section-item-num">13</span><span class="section-item-text">Communications Log</span></div>
+          <div class="section-item"><span class="section-item-num">14</span><span class="section-item-text">Post-Event Debrief</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOCIAL PROOF ── -->
+  <section class="social-proof" id="reviews">
+    <div class="container">
+      <p class="section-eyebrow">Early Results</p>
+      <h2 class="section-title fade-up">What Planners Are Saying</h2>
+      <div class="stats-row stagger">
+        <div class="stat-cell">
+          <div class="stat-number">14</div>
+          <div class="stat-label">Planning sections<br>in one workspace</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Pre-loaded tasks<br>ready on day one</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">0</div>
+          <div class="stat-label">Monthly fees.<br>Ever.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Events you can<br>manage with one file</div>
+        </div>
+      </div>
+      <div class="testimonials-grid stagger">
+        <div class="testimonial">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testimonial-text">"I used to manage every wedding across four different spreadsheets. I'd spend 20 minutes just finding the right file. This replaces all of it — and the vendor contract tracking alone has saved me twice from missing a deposit deadline."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">M</div>
+            <div>
+              <div class="testimonial-name">Michelle T.</div>
+              <div class="testimonial-role">Independent Wedding Planner · 12 years</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testimonial-text">"The run of show section is incredible. I can toggle between internal view and client view, print it in 30 seconds, and hand it to my AV team. My vendors actually comment on how organized my timelines are now."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">J</div>
+            <div>
+              <div class="testimonial-name">James R.</div>
+              <div class="testimonial-role">Corporate Event Coordinator</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+          </div>
+          <p class="testimonial-text">"I planned my daughter's quinceañera for 180 guests using this. The seating chart with automatic +1 suggestions, the meal preference tracking, the moodboard — everything I needed was already built in. Worth every dollar."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">S</div>
+            <div>
+              <div class="testimonial-name">Sandra M.</div>
+              <div class="testimonial-role">Family Event Coordinator</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LEAD MAGNET ── -->
+  <section class="lead-magnet" id="freebie">
+    <div class="container">
+      <div class="lead-magnet-inner">
+        <div class="lead-magnet-left">
+          <p class="section-eyebrow" style="color:var(--rose);">Free Download</p>
+          <h2>Start With the<br><em>47-Point Event Day</em><br>Checklist</h2>
+          <p>
+            Before you invest in any planning tool, get the professional event day checklist that covers every phase —
+            from the night before through final load-out. 47 items. 7 phases. Priority flags for critical tasks.
+            Completely free.
+          </p>
+          <div class="checklist-preview">
+            <div class="checklist-preview-title">What's Covered — 7 Phases</div>
+            <div class="checklist-item"><div class="check-box checked"></div><span class="checklist-text">The Night Before — final confirmations & packing</span></div>
+            <div class="checklist-item"><div class="check-box checked"></div><span class="checklist-text">Arrival & Load-In — venue walk & vendor check-in</span></div>
+            <div class="checklist-item"><div class="check-box checked"></div><span class="checklist-text">Room & Setup Check — tables, AV, lighting, signage</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span class="checklist-text">Pre-Doors Brief — staff, coordinator, client alignment</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span class="checklist-text">During the Event — timeline, cues, service coordination</span></div>
+            <div class="checklist-item"><div class="check-box"></div><span class="checklist-text">Load-Out & Close — sign-off, gratuity, debrief</span></div>
+          </div>
+        </div>
+        <div class="lead-magnet-right">
+          <h3 style="font-family:var(--font-display);font-size:1.6rem;font-weight:600;color:white;margin-bottom:8px;line-height:1.2;">
+            Get the Free Checklist
+          </h3>
+          <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:24px;line-height:1.6;">
+            Enter your email and we'll send the 47-Point Event Day Checklist directly to your inbox — plus tips on professional event planning systems.
+          </p>
+          <div class="email-form">
+            <input type="text" placeholder="Your first name" />
+            <input type="email" placeholder="Your email address" />
+            <button class="btn-white" onclick="window.location.href='https://theplannerworkspace.com/checklist'">
+              Send Me the Free Checklist →
+            </button>
+            <p class="form-disclaimer">
+              No spam. Unsubscribe anytime. By entering your email you agree to receive occasional emails about Event Command Center products and event planning tips.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRICING ── -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <p class="section-eyebrow">Simple Pricing</p>
+      <h2 class="section-title fade-up">One Price.<br><em>Yours Forever.</em></h2>
+      <p class="section-sub fade-up">No monthly fees. No per-event charges. No features locked behind a subscription. Pay once and use Event Command Center for every event you plan — forever.</p>
+      <div class="pricing-card fade-up">
+        <div class="pricing-header">
+          <div class="pricing-eyebrow">Event Command Center</div>
+          <div class="pricing-title">Wedding Planner Edition</div>
+          <div class="pricing-subtitle">Complete professional event planning workspace</div>
+        </div>
+        <div class="pricing-body">
+          <div class="pricing-amount">
+            <span class="pricing-currency">$</span>
+            <span class="pricing-number">47</span>
+          </div>
+          <p class="pricing-period">One-time purchase · <strong>No subscription ever</strong></p>
+          <ul class="pricing-features">
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              14 fully integrated planning sections
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              120+ pre-loaded professional task templates
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              Unlimited events saved in My Events library
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              Works offline — no internet connection required
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              Light &amp; dark mode, custom brand color, logo upload
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              CSV export for budget, guests, vendors, seating
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              Printable branded run of show document
+            </li>
+            <li>
+              <div class="pricing-check"><svg fill="none" stroke="white" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div>
+              Works on Mac, PC, tablet, and mobile
+            </li>
+          </ul>
+          <a href="https://theplannerworkspace.com/get" class="pricing-cta">
+            Get Instant Access — $47
+          </a>
+          <p class="pricing-guarantee">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            Digital product — instant download after purchase
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <p class="section-eyebrow">Common Questions</p>
+      <h2 class="section-title fade-up">Frequently Asked Questions</h2>
+      <div class="faq-list" id="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What exactly do I receive when I purchase?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            You receive a single HTML file — <code>event-command-center.html</code> — that you download and open in any modern web browser (Chrome, Safari, Edge, Firefox). The entire application runs inside that one file with no installation, no server, and no internet connection required after download. All your data saves to your browser automatically.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do I need any technical skills to use it?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            None. If you can use Google Sheets or any web-based tool, you can use Event Command Center. Every section has clear labels, inline editing, and a clean interface. There is no code to write, no settings to configure, and no documentation to read before you start. Open the file and go.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I use this for multiple events?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Yes — unlimited events. The My Events library lets you save a complete snapshot of any event and switch between them with one click. Your entire workspace — budget, vendors, guests, timeline, seating chart — reloads instantly when you switch. Browser storage comfortably holds 20–30 fully built events.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Will I lose my data if I clear my browser or get a new computer?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Your data lives in your browser's local storage. If you clear browser data, the data clears with it — so regular backups are important. Settings → Export Backup downloads a complete JSON file of all your event data in seconds. On a new computer, use Settings → Import Backup to restore everything instantly. We recommend exporting a backup after every major planning session.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Does it work on iPhone and Android?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Yes. The app is fully responsive and works on any modern mobile browser. You can also install it to your phone's home screen as a PWA (Progressive Web App) — on iPhone, use Safari → Share → Add to Home Screen. On Android, Chrome will prompt you to install automatically. Once installed, it works offline and opens full-screen like a native app.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Is there a monthly subscription?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            No. You pay once and own it forever. There are no monthly fees, no per-event charges, no premium tier, and no features locked behind an upgrade. The price you see is the total price — ever.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I share or resell this file?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Your purchase is licensed for personal use — you can use it for as many of your own events as you like. Sharing, reselling, or distributing the file is not permitted. Each planner who wants to use it should purchase their own copy.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ── -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="final-cta-inner fade-up">
+        <h2>Your Next Event<br><em>Starts Here.</em></h2>
+        <p>
+          Stop managing your events across a dozen spreadsheets.
+          Get Event Command Center and run every event from one organized,
+          professional workspace — starting today.
+        </p>
+        <a href="https://theplannerworkspace.com/get" class="btn-white-outline">
+          Get Instant Access — $47
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </a>
+        <p class="final-sub">One-time purchase · Instant download · No subscription · Use offline</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-logo">The Planner Workspace</div>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#who">Who It's For</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://theplannerworkspace.com/checklist">Free Checklist</a>
+      <a href="https://theplannerworkspace.com/get">Buy Now</a>
+      <a href="https://theplannerworkspace.com/terms">Terms of Use</a>
+      <a href="https://theplannerworkspace.com/privacy">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2025 The Planner Workspace. All rights reserved. &nbsp;·&nbsp; Digital product — all sales final. &nbsp;·&nbsp; <a href="mailto:support@theplannerworkspace.com" style="color:rgba(255,255,255,0.3);">support@theplannerworkspace.com</a></p>
+  </footer>
+
+  <script>
+    // ── Nav scroll behavior ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // ── Intersection observer for scroll animations ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up, .stagger').forEach(el => observer.observe(el));
+
+    // ── FAQ accordion ──
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-question').forEach(b => b.classList.remove('open'));
+      // Open this one if it was closed
+      if (!isOpen) {
+        answer.classList.add('open');
+        btn.classList.add('open');
+      }
+    }
+
+    // ── Smooth scroll for anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 72;
+          window.scrollTo({
+            top: target.getBoundingClientRect().top + window.pageYOffset - offset,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
