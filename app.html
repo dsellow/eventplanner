@@ -4128,9 +4128,9 @@
       <div class="gate-input-wrap">
         <input
           id="gate-input"
-          type="text"
-          placeholder="ECC-2025-PLANNER"
-          autocomplete="off"
+          type="password"
+          placeholder="Enter your access code"
+          autocomplete="new-password"
           autocorrect="off"
           autocapitalize="characters"
           spellcheck="false"
@@ -4138,7 +4138,7 @@
           style="text-transform:uppercase;letter-spacing:0.14em;"
           onkeydown="if(event.key==='Enter') submitGateCode()"
           oninput="clearGateError(); this.value=this.value.toUpperCase()" />
-        <button id="gate-toggle-pw" onclick="toggleGateVisibility()" title="Show / hide code" type="button" style="display:none;">
+        <button id="gate-toggle-pw" onclick="toggleGateVisibility()" title="Show / hide code" type="button">
           <svg id="gate-eye-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -4150,7 +4150,8 @@
       <span id="gate-error-msg"></span>
       <button id="gate-submit" onclick="submitGateCode()">Unlock Workspace</button>
       <p class="gate-footer-note">
-        Your access code was included in your order confirmation.<br>
+        Your access code was included in your order confirmation email.<br>
+        Check your inbox for an email from <strong>theplannerworkspace.com</strong>.<br>
         Need help? Email <a href="mailto:support@theplannerworkspace.com" style="color:var(--brand-primary);font-weight:600;text-decoration:none;">support@theplannerworkspace.com</a>
       </p>
     </div>
@@ -10938,6 +10939,16 @@
       if (unlocked === 'true') {
         const gate = document.getElementById('access-gate');
         if (gate) gate.style.display = 'none';
+      } else {
+        // Clear the input field on load — prevents browser autofill
+        // from pre-populating the access code for non-paying visitors
+        setTimeout(() => {
+          const input = document.getElementById('gate-input');
+          if (input) {
+            input.value = '';
+            input.focus();
+          }
+        }, 100);
       }
     }
 
