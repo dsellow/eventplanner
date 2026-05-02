@@ -6068,6 +6068,10 @@
         <div class="seat-stat"><span id="seat-assigned" style="color:var(--success)">0</span><span>Assigned</span></div>
         <div class="gst-stat-div"></div>
         <div class="seat-stat"><span id="seat-empty" style="color:var(--warning)">0</span><span>Empty Seats</span></div>
+        <div class="gst-stat-div"></div>
+        <div class="seat-stat" style="flex:1;justify-content:flex-end;">
+          <span id="seat-guest-source-note" style="font-size:0.72rem;color:var(--text-muted);font-style:italic;"></span>
+        </div>
       </div>
       <div class="seat-grid" id="seat-grid"></div>
       <div class="seat-empty-state" id="seat-empty-state" style="display:none;">
@@ -8393,19 +8397,37 @@
       }
       if (emptyS) emptyS.style.display = 'none';
 
-      // Build datalist of ALL guest names including +1s
+      // Build datalist of guest names for seating chart
+      // Confirmed guests appear first, then all others as fallback
+      // so planners who haven't collected RSVPs yet can still seat guests
       const guests = APP.guests || [];
+      const confirmedGuests = guests.filter(g => g.rsvp === 'Confirmed');
+      const otherGuests     = guests.filter(g => g.rsvp !== 'Confirmed');
+
+      // Use confirmed guests if any exist, otherwise fall back to all guests
+      const sourceGuests = confirmedGuests.length > 0 ? confirmedGuests : guests;
+
       const guestNames = [];
-      guests.forEach(g => {
+      sourceGuests.forEach(g => {
         const primary = [g.firstName, g.lastName].filter(Boolean).join(' ');
         if (primary) guestNames.push(primary);
         // Include +1 name if they have one
         if (g.plus1 && g.plus1.trim()) guestNames.push(g.plus1.trim());
       });
 
+      // If using confirmed only, also add names already seated (so edits work)
+      if (confirmedGuests.length > 0) {
+        const seatedNames = (APP.seating || [])
+          .flatMap(t => t.seats || [])
+          .filter(Boolean);
+        seatedNames.forEach(n => {
+          if (n && !guestNames.includes(n)) guestNames.push(n);
+        });
+      }
+
       // Build a lookup: primary guest name → +1 name
       const plus1Lookup = {};
-      guests.forEach(g => {
+      sourceGuests.forEach(g => {
         const primary = [g.firstName, g.lastName].filter(Boolean).join(' ').toLowerCase();
         if (primary && g.plus1 && g.plus1.trim()) {
           plus1Lookup[primary] = g.plus1.trim();
@@ -8419,6 +8441,21 @@
         document.body.appendChild(dl);
       }
       dl.innerHTML = [...new Set(guestNames)].map(n => `<option value="${escHtml(n)}">`).join('');
+
+      // Show a status note about the guest list source
+      const statusEl = document.getElementById('seat-guest-source-note');
+      if (statusEl) {
+        if (confirmedGuests.length > 0) {
+          statusEl.textContent = `Showing ${confirmedGuests.length} confirmed guest${confirmedGuests.length !== 1 ? 's' : ''} in dropdown`;
+          statusEl.style.color = 'var(--success)';
+        } else if (guests.length > 0) {
+          statusEl.textContent = `No confirmed guests yet — showing all ${guests.length} guests`;
+          statusEl.style.color = 'var(--text-muted)';
+        } else {
+          statusEl.textContent = 'No guests added yet — add guests in the Guest List section';
+          statusEl.style.color = 'var(--text-muted)';
+        }
+      }
 
       grid.innerHTML = tables.map((t, ti) => {
         const cap    = parseInt(t.capacity) || 6;
