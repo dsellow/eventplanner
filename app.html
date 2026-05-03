@@ -7917,7 +7917,16 @@
     function togglePlus1Details() {
       const plus1Val  = (document.getElementById('gd-plus1')||{}).value || '';
       const detailsEl = document.getElementById('gd-plus1-details');
-      if (detailsEl) detailsEl.style.display = plus1Val.trim() ? 'block' : 'none';
+      const hasPlus1  = plus1Val.trim().length > 0;
+      if (detailsEl) detailsEl.style.display = hasPlus1 ? 'block' : 'none';
+      // When +1 name is cleared, also clear their meal and dietary fields
+      // so no orphaned preferences remain
+      if (!hasPlus1) {
+        const mealEl    = document.getElementById('gd-plus1-meal');
+        const dietaryEl = document.getElementById('gd-plus1-dietary');
+        if (mealEl)    mealEl.value    = '';
+        if (dietaryEl) dietaryEl.value = '';
+      }
     }
 
     function closeGuestModal() {
@@ -7942,6 +7951,8 @@
       const last  = document.getElementById('gd-last').value.trim();
       if (!first && !last) { showToast('Guest name is required', 'warning'); return; }
 
+      const plus1Name = document.getElementById('gd-plus1').value.trim();
+
       const data = {
         firstName:    first,
         lastName:     last,
@@ -7953,9 +7964,11 @@
         tableNum:     document.getElementById('gd-table').value.trim(),
         meal:         document.getElementById('gd-meal').value,
         dietary:      document.getElementById('gd-dietary').value.trim(),
-        plus1:        document.getElementById('gd-plus1').value.trim(),
-        plus1Meal:    document.getElementById('gd-plus1-meal').value,
-        plus1Dietary: document.getElementById('gd-plus1-dietary').value.trim(),
+        // If the +1 name has been cleared, wipe meal and dietary too
+        // so orphaned food preferences don't persist without a guest
+        plus1:        plus1Name,
+        plus1Meal:    plus1Name ? document.getElementById('gd-plus1-meal').value    : '',
+        plus1Dietary: plus1Name ? document.getElementById('gd-plus1-dietary').value.trim() : '',
         notes:        document.getElementById('gd-notes').value.trim(),
         vip:          document.getElementById('gd-vip').value === 'true',
       };
